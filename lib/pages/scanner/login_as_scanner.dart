@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../globals.dart';
+import '../navigation.dart';
 
 class LoginAsScanner extends ConsumerWidget {
   const LoginAsScanner({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class LoginAsScanner extends ConsumerWidget {
           SizedBox(
               width: double.infinity,
               child: Text(
-                "Welkom propper",
+                "Welkom scanner",
                 style: Theme.of(context).textTheme.headline1,
               )),
           SizedBox(
@@ -83,7 +84,7 @@ class LoginAsScanner extends ConsumerWidget {
                 onPressed: () async => await _auth
                     .tryToLoginAsScanner(
                         _usernameController.text, _passwordController.text)
-                    .then((value) => print("login gelukt"))
+                    .then((value) => ref.read(navigationNotifierProvider).selectPage(2))
                     .onError((error, stackTrace) => print("login niet geluk")),
                 child: Row(
                   children: [

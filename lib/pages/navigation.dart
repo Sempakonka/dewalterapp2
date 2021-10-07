@@ -1,3 +1,4 @@
+import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/sign_in.dart';
 import 'package:de_walter_app_2/providers/uiproviders.dart';
@@ -32,9 +33,12 @@ class NavigationNotifier extends ChangeNotifier {
         //read(newsPageNotifierProvider).getAllNewsItemsFromDatabase();
         break;
       case 1:
-        _body = LoginAsScanner();
+        _body = const LoginAsScanner();
         _currentIndex = 1;
         //     read(eventsNotifierProvider).getAllEventsFromDatabase();
+        break;
+      case 2:
+        _body = const ChooseEvent();
         break;
       case 6:
         //    _body = AccountSettings();
@@ -58,17 +62,24 @@ class NavigationBarScreen extends ConsumerWidget {
     // context.read(newsPageNotifierProvider).getAllNewsItemsFromDatabase();
 
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: const [
-          Expanded(child: Icon(
-              Icons.print,
-              color: Colors.white,
-            ),
+      body: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(40.0),
+                  child: Image(image: AssetImage('assets/logo.png')),
+                ),
+              ),
+              WorkSpace()
+            ],
           ),
-          WorkSpace()
-        ],
-       ),
+        ),
+      ),
     );
   }
 }
@@ -101,18 +112,17 @@ class WorkSpace extends HookConsumerWidget {
       animation: _controller,
       builder: (context, child) {
         return Container(
-          height: _controller.value,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(35),
-              topRight: Radius.circular(35),
+            height: _controller.value,
+            width: MediaQuery.of(context).size.width,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(35),
+                topRight: Radius.circular(35),
+              ),
             ),
-          ),
-          child: pageModel.body
-        );
+            child: pageModel.body);
       },
     );
   }
 }
-
