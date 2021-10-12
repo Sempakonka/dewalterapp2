@@ -1,21 +1,23 @@
-import 'package:de_walter_app_2/models/event.dart';
 import 'package:de_walter_app_2/models/ticket.dart';
 import 'package:de_walter_app_2/pages/navigation.dart';
 import 'package:de_walter_app_2/providers/database_providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../globals.dart';
 
 class PeopleScannedOfEvent extends ConsumerWidget {
-  const PeopleScannedOfEvent({Key? key}) : super(key: key);
+  PeopleScannedOfEvent({Key? key, required this.args})
+      : super(key: key);
+
+  Map args;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ///TODO: get id of current user
     var events = ref.watch(ticketsAtScannedByProvider(6));
+   //print(args.);
 
     return events.when(
       data: (var events) {
@@ -24,22 +26,48 @@ class PeopleScannedOfEvent extends ConsumerWidget {
           padding: const EdgeInsets.all(10.0),
           child: Column(
             children: [
-              Text("voor Players", style: TextStyle(fontSize: Theme.of(context).textTheme.headline1!.fontSize, color: Colors.black87, fontWeight: Theme.of(context).textTheme.headline1!.fontWeight)),
-              Text("20- Juli - 2021", style: TextStyle(fontSize: Theme.of(context).textTheme.bodyText2!.fontSize, color: Colors.black38, fontWeight: Theme.of(context).textTheme.bodyText2!.fontWeight)),
+              Text("voor ${args["name"]}",
+                  style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.headline1!.fontSize,
+                      color: Colors.black87,
+                      fontWeight:
+                          Theme.of(context).textTheme.headline1!.fontWeight)),
+              Text(args["date"],
+                  style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyText2!.fontSize,
+                      color: Colors.black38,
+                      fontWeight:
+                          Theme.of(context).textTheme.bodyText2!.fontWeight)),
               Expanded(
                 child: Scrollbar(
                   child: ListView.builder(
                     itemCount: events.length,
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
-                        onTap: ()=> ref.read(navigationNotifierProvider).selectPage(3),
                         title: Text(
                           events[index].name,
-                          style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+                          style: TextStyle(
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontWeight,
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .headline2!
+                                  .fontSize),
                         ),
                         subtitle: Text(
-                       "event: " +  events[index].eventId.toString(),
-                          style: const TextStyle(fontWeight: FontWeight.normal, color: Colors.black54),
+                          "event: " + events[index].eventId.toString(),
+                          style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .fontSize,
+                              color: Colors.black38,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .fontWeight),
                         ),
                       );
                     },
@@ -51,15 +79,19 @@ class PeopleScannedOfEvent extends ConsumerWidget {
                 child: SizedBox(
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: ElevatedButton(
-                    onPressed: () async => ref.read(navigationNotifierProvider).selectPage(4),
+                    onPressed: () async => ref
+                        .read(navigationNotifierProvider)
+                        .selectPage(4, args),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           "Tickets scannen",
                           style: TextStyle(
-                              fontSize:
-                              Theme.of(context).textTheme.bodyText2!.fontSize),
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .fontSize),
                         ),
                         const Icon(Icons.arrow_forward_rounded)
                       ],
@@ -71,9 +103,9 @@ class PeopleScannedOfEvent extends ConsumerWidget {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        padding:
-                        const EdgeInsets.all(10) //content padding inside button
-                    ),
+                        padding: const EdgeInsets.all(
+                            10) //content padding inside button
+                        ),
                   ),
                 ),
               ),

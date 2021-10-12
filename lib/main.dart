@@ -13,15 +13,15 @@ Future<void> main() async {
           fontFamily: 'Poppins',
           textTheme: const TextTheme(
             headline1: TextStyle(
-                fontSize: 30.0,
+                fontSize: 26.0,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 16, 172, 132)),
             headline2: TextStyle(
-                fontSize: 24.0,
+                fontSize: 17.0,
                 fontWeight: FontWeight.bold,
                 color: Color.fromARGB(255, 16, 172, 132)),
             bodyText2: TextStyle(
-                fontSize: 17.0,
+                fontSize: 14.0,
                 fontWeight: FontWeight.normal,
                 color: Color.fromARGB(255, 16, 172, 132)),
           ),

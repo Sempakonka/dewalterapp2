@@ -8,16 +8,16 @@ import '../../globals.dart';
 import '../navigation.dart';
 
 class ScanTicketPage extends ConsumerWidget{
-  const ScanTicketPage({Key? key}) : super(key: key);
+  ScanTicketPage({Key? key, required this.args}) : super(key: key);
 
-
+Map args;
 
   @override
   Widget build(BuildContext context, WidgetRef ref){
     return Column(
       children: [
-        Text("voor Players", style: TextStyle(fontSize: Theme.of(context).textTheme.headline1!.fontSize, color: Colors.black87, fontWeight: Theme.of(context).textTheme.headline1!.fontWeight)),
-        Text("20- Juli - 2021", style: TextStyle(fontSize: Theme.of(context).textTheme.bodyText2!.fontSize, color: Colors.black38, fontWeight: Theme.of(context).textTheme.bodyText2!.fontWeight)),
+        Text("voor ${args["name"]}", style: TextStyle(fontSize: Theme.of(context).textTheme.headline1!.fontSize, color: Colors.black87, fontWeight: Theme.of(context).textTheme.headline1!.fontWeight)),
+        Text(args["date"], style: TextStyle(fontSize: Theme.of(context).textTheme.bodyText2!.fontSize, color: Colors.black38, fontWeight: Theme.of(context).textTheme.bodyText2!.fontWeight)),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.fromLTRB(45.0,40,45,40),
@@ -25,7 +25,6 @@ class ScanTicketPage extends ConsumerWidget{
               overlay: QrScannerOverlayShape(borderLength: 30, borderColor: Colors.green),
               key: GlobalKey(debugLabel: 'QR'),
               onQRViewCreated: _onQRViewCreated,
-
             ),
           ),
         ),

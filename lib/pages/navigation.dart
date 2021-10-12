@@ -27,7 +27,7 @@ class NavigationNotifier extends ChangeNotifier {
 
   Widget get body => _body;
 
-  void selectPage(int i) {
+  void selectPage(int i, [final args]) {
     switch (i) {
       case 0:
         _body = const SignInPage();
@@ -43,11 +43,11 @@ class NavigationNotifier extends ChangeNotifier {
         _body = const ChooseEvent();
         break;
       case 3:
-        _body = const PeopleScannedOfEvent();
+        _body = PeopleScannedOfEvent(args: args);
 
         break;
       case 4:
-        _body = const ScanTicketPage();
+        _body = ScanTicketPage(args: args);
         break;
       case 6:
         //    _body = AccountSettings();
