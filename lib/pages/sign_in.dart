@@ -17,10 +17,10 @@ class SignInPage extends HookConsumerWidget {
 }
 */
 
-class SignInPagee extends HookConsumerWidget {
+class SignInPage extends HookConsumerWidget {
   final Duration duration = const Duration(milliseconds: 400);
 
-  const SignInPagee({Key? key}) : super(key: key);
+  const SignInPage({Key? key}) : super(key: key);
   static double endPoint = 500;
   static double lowerBound = 350;
 

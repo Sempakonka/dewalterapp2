@@ -87,6 +87,7 @@ class LoginAsScanner extends ConsumerWidget {
                     .then((value) => ref.read(navigationNotifierProvider).selectPage(2))
                     .onError((error, stackTrace) => print("login niet geluk")),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       "Inloggen",

@@ -1,5 +1,7 @@
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
+import 'package:de_walter_app_2/pages/scanner/people_scanned_of_event_page.dart';
+import 'package:de_walter_app_2/pages/scanner/scan_ticket_page.dart';
 import 'package:de_walter_app_2/pages/sign_in.dart';
 import 'package:de_walter_app_2/providers/uiproviders.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +23,14 @@ class NavigationNotifier extends ChangeNotifier {
 
   NavigationNotifier(this.read);
 
-  late Widget _body = const SignInPagee();
+  late Widget _body = const SignInPage();
 
   Widget get body => _body;
 
   void selectPage(int i) {
     switch (i) {
       case 0:
-        _body = const SignInPagee();
+        _body = const SignInPage();
         _currentIndex = 0;
         //read(newsPageNotifierProvider).getAllNewsItemsFromDatabase();
         break;
@@ -39,6 +41,13 @@ class NavigationNotifier extends ChangeNotifier {
         break;
       case 2:
         _body = const ChooseEvent();
+        break;
+      case 3:
+        _body = const PeopleScannedOfEvent();
+
+        break;
+      case 4:
+        _body = const ScanTicketPage();
         break;
       case 6:
         //    _body = AccountSettings();
