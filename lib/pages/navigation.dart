@@ -9,13 +9,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+// ignore: constant_identifier_names
 enum NavigationBarEvent { NEWS, EVENTS }
 
 final navigationNotifierProvider =
     ChangeNotifierProvider((ref) => NavigationNotifier(ref.read));
 
 class NavigationNotifier extends ChangeNotifier {
-//  static const defaultPage = PageModel(NavigationBarEvent.NEWS);
   late final Reader read;
   int _currentIndex = 0;
 
@@ -32,12 +32,10 @@ class NavigationNotifier extends ChangeNotifier {
       case 0:
         _body = const SignInPage();
         _currentIndex = 0;
-        //read(newsPageNotifierProvider).getAllNewsItemsFromDatabase();
         break;
       case 1:
         _body = const LoginAsScanner();
         _currentIndex = 1;
-        //     read(eventsNotifierProvider).getAllEventsFromDatabase();
         break;
       case 2:
         _body = const ChooseEvent();

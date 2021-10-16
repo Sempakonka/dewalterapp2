@@ -1,5 +1,6 @@
 import 'package:de_walter_app_2/models/ticket.dart';
 import 'package:de_walter_app_2/pages/navigation.dart';
+import 'package:de_walter_app_2/providers/auth_providers.dart';
 import 'package:de_walter_app_2/providers/database_providers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,17 +12,15 @@ class PeopleScannedOfEvent extends ConsumerWidget {
   PeopleScannedOfEvent({Key? key, required this.args})
       : super(key: key);
 
-  Map args;
+  final args;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ///TODO: get id of current user
-    var events = ref.watch(ticketsAtScannedByProvider(6));
-   //print(args.);
+    var events = ref.watch(ticketsAtScannedByProvider(ref.read(sessionNotifierProvider).user!.id));
 
     return events.when(
       data: (var events) {
-        print(events[0]);
         return Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(

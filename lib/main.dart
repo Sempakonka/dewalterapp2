@@ -1,5 +1,8 @@
 import 'package:de_walter_app_2/pages/navigation.dart';
+import 'package:de_walter_app_2/pages/scanner/already_scanned_ticket.dart';
+import 'package:de_walter_app_2/pages/scanner/incorrect_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
+import 'package:de_walter_app_2/pages/scanner/valid_ticked.dart';
 import 'package:de_walter_app_2/providers/auth_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,6 +31,10 @@ Future<void> main() async {
         ),
         routes: {
           '/': (context) => const AuthChecker(),
+          ValidTicket.routeName:  (context) =>  const ValidTicket(),
+          AlreadyScanned.routeName:  (context) =>  const AlreadyScanned(),
+          IncorrectTicket.routeName:  (context) =>  const IncorrectTicket(),
+
         },
       ),
     ),
@@ -41,10 +48,10 @@ class AuthChecker extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final _authState = ref.watch(sessionNotifierProvider);
     //   _authState.uid == null ? const SignInPage() : ChooseEventPage();
-    if (_authState.uid == null) {
+    if (_authState.user == null) {
       return const NavigationBarScreen();
     } else {
-      return LoginAsScanner();
+      return const LoginAsScanner();
     }
   }
 }

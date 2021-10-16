@@ -83,9 +83,9 @@ class LoginAsScanner extends ConsumerWidget {
               child: ElevatedButton(
                 onPressed: () async => await _auth
                     .tryToLoginAsScanner(
-                        _usernameController.text, _passwordController.text)
+                        _usernameController.text, _passwordController.text, ref)
                     .then((value) => ref.read(navigationNotifierProvider).selectPage(2))
-                    .onError((error, stackTrace) => print("login niet geluk")),
+                    .onError((error, stackTrace) => print(error)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

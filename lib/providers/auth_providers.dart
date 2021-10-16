@@ -1,15 +1,32 @@
-import 'package:de_walter_app_2/services/auth_services.dart';
+import 'package:de_walter_app_2/models/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final sessionNotifierProvider = ChangeNotifierProvider((ref) => SessionNotifier());
+final sessionNotifierProvider =
+    ChangeNotifierProvider((ref) => SessionNotifier());
 
-class SessionNotifier extends ChangeNotifier{
-  String? _uid;
+class SessionNotifier extends ChangeNotifier {
+  User? _user;
 
-  String? get uid => _uid;
+  User? get user => _user;
 
-  void getUid(String username, String password) async {
-    _uid = await tryToLoginAsScanner(username, password);
+  void setUser(
+      {required int id,
+      required String username,
+      required String name,
+      required String email,
+      required String phone,
+      required int rank,
+      required int code,
+      required var status}) async {
+    _user = User(
+        id: id,
+        name: name,
+        username: username,
+        email: email,
+        code: code,
+        status: status,
+        phone: phone,
+        rank: rank);
   }
 }
