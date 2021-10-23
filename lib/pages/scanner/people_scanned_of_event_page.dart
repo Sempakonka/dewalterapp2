@@ -9,15 +9,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../globals.dart';
 
 class PeopleScannedOfEvent extends ConsumerWidget {
-  PeopleScannedOfEvent({Key? key, required this.args})
-      : super(key: key);
+  const PeopleScannedOfEvent({Key? key, required this.args}) : super(key: key);
+
 
   final args;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ///TODO: get id of current user
-    var events = ref.watch(ticketsAtScannedByProvider(ref.read(sessionNotifierProvider).user!.id));
+    var events = ref.watch(
+        ticketsAtScannedByProvider(ref.read(sessionNotifierProvider).user!.id));
 
     return events.when(
       data: (var events) {

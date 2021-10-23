@@ -1,7 +1,7 @@
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ScanResultPage extends ConsumerWidget{
+class ScanResultPage extends ConsumerWidget {
   const ScanResultPage({Key? key, required this.result}) : super(key: key);
 
   final result;
@@ -11,5 +11,4 @@ class ScanResultPage extends ConsumerWidget{
     // TODO: implement build
     throw UnimplementedError();
   }
-
 }

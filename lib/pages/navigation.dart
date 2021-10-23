@@ -20,11 +20,10 @@ class Singleton {
 
   factory Singleton() => _instance;
 
- Widget body = const SignInPage();
+  Widget body = const SignInPage();
 
   Singleton._internal();
 }
-
 
 class NavigationNotifier extends ChangeNotifier {
   late final Reader read;
@@ -33,10 +32,6 @@ class NavigationNotifier extends ChangeNotifier {
   int get currentIndex => _currentIndex;
 
   NavigationNotifier(this.read);
-
-  late Widget _body = Singleton().body;
-
-  Widget get body => _body;
 
   void selectPage(int i, [final args]) {
     switch (i) {
@@ -111,7 +106,6 @@ class WorkSpace extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final pageModel = ref.watch(navigationNotifierProvider);
     final _controller = useAnimationController(
         duration: duration, upperBound: endPoint, lowerBound: lowerBound);
 
@@ -139,7 +133,7 @@ class WorkSpace extends HookConsumerWidget {
                 topRight: Radius.circular(35),
               ),
             ),
-            child:  Singleton().body);
+            child: Singleton().body);
       },
     );
   }

@@ -83,18 +83,22 @@ class LoginAsScanner extends ConsumerWidget {
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: ElevatedButton(
                   onPressed: () async => await _auth
-                      .tryToLoginAsScanner(
-                          _usernameController.text, _passwordController.text, ref)
-                      .then((value) => ref.read(navigationNotifierProvider).selectPage(2))
-                      .onError((error, stackTrace) => print(error)),
+                      .tryToLoginAsScanner(_usernameController.text,
+                          _passwordController.text, ref)
+                      .then((value) =>
+                          ref.read(navigationNotifierProvider).selectPage(2))
+                      .onError((error, stackTrace) =>
+                          {throw UnimplementedError(error.toString())}),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Inloggen",
                         style: TextStyle(
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText2!.fontSize),
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .bodyText2!
+                                .fontSize),
                       ),
                       const Icon(Icons.arrow_forward_rounded)
                     ],
@@ -106,8 +110,8 @@ class LoginAsScanner extends ConsumerWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      padding:
-                          const EdgeInsets.all(10) //content padding inside button
+                      padding: const EdgeInsets.all(
+                          10) //content padding inside button
                       ),
                 ),
               ),

@@ -5,7 +5,6 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'database_service.dart';
 
-
 // checks if code is valid
 Future<bool> checkCode(String code, int eventId) async {
   bool resultOfCheckQrIDExistence;
@@ -31,8 +30,8 @@ Future<bool> checkCode(String code, int eventId) async {
   return false;
 }
 
-void handleScannedCode(
-    String code, QRViewController controller, BuildContext context, int eventId) async {
+void handleScannedCode(String code, QRViewController controller,
+    BuildContext context, int eventId) async {
   controller.pauseCamera();
 
   bool isValidCode = await checkCode(code, eventId);

@@ -42,12 +42,14 @@ Future<List<Ticket>> getTicketAtScannedBy(int userId) async {
       db: 'u9894p21510_app',
       password: '4TjTcdnE'));
 
-  var result = await conn.query('select * from tickets where scanned_by = ?', [userId]);
+  var result =
+      await conn.query('select * from tickets where scanned_by = ?', [userId]);
   await conn.close();
 
   List<Ticket> tickets = [];
   for (var row in result) {
-    tickets.add(Ticket(id: row[0],
+    tickets.add(Ticket(
+        id: row[0],
         eventId: row[1],
         status: row[2],
         name: row[3],
@@ -55,8 +57,8 @@ Future<List<Ticket>> getTicketAtScannedBy(int userId) async {
         createdAt: row[5],
         createdBy: row[6],
         scannedAt: row[7],
-    scannedBy: row[8],
-    tickedCode: row[9]));
+        scannedBy: row[8],
+        tickedCode: row[9]));
   }
 
   return tickets;
@@ -117,7 +119,8 @@ Future checkSelectedEventIsEqualToTicketEvent(String ticketCode) async {
   }
 }
 
-Future checkInTicket(String ticketCode, DateTime scannedAt, int scannedBy) async {
+Future checkInTicket(
+    String ticketCode, DateTime scannedAt, int scannedBy) async {
   scannedAt = scannedAt.toUtc();
   final conn = await MySqlConnection.connect(ConnectionSettings(
       host: '185.104.29.16',
@@ -128,18 +131,15 @@ Future checkInTicket(String ticketCode, DateTime scannedAt, int scannedBy) async
 
   var result = await conn.query(
       'update tickets set '
-          'scanned_at = ?,'
-          'scanned_by = ? '
-          'where ticket_code = ?',
+      'scanned_at = ?,'
+      'scanned_by = ? '
+      'where ticket_code = ?',
       [scannedAt, scannedBy, ticketCode]);
   await conn.close();
   for (var row in result) {
     return row[0];
   }
 }
-
-
-
 
 Future getTicketByCode(String ticketCode) async {
   final conn = await MySqlConnection.connect(ConnectionSettings(
@@ -154,7 +154,8 @@ Future getTicketByCode(String ticketCode) async {
   await conn.close();
 
   for (var row in result) {
-    return Ticket(id: row[0],
+    return Ticket(
+        id: row[0],
         eventId: row[1],
         status: row[2],
         name: row[3],
@@ -165,5 +166,3 @@ Future getTicketByCode(String ticketCode) async {
   }
   return null;
 }
-
-

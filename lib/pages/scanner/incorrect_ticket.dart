@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class IncorrectTicket extends ConsumerWidget {
@@ -19,7 +18,8 @@ class IncorrectTicket extends ConsumerWidget {
             children: [
               const Text("incorrect ticket"),
               ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, Navigator.defaultRouteName),
+                  onPressed: () =>
+                      Navigator.pushNamed(context, Navigator.defaultRouteName),
                   child: const Text("go back"))
             ],
           ),

@@ -6,16 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-/*
-class SignInPage extends HookConsumerWidget {
-  const SignInPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return const AnimatedWidget();
-  }
-}
-*/
 
 class SignInPage extends HookConsumerWidget {
   final Duration duration = const Duration(milliseconds: 400);
@@ -39,7 +29,6 @@ class SignInPage extends HookConsumerWidget {
     useValueChanged(_height, (_, __) async {
       _controller.forward();
     });
-    print(_controller.value);
 
     return AnimatedBuilder(
       animation: _controller,

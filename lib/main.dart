@@ -31,10 +31,9 @@ Future<void> main() async {
         ),
         routes: {
           '/': (context) => const AuthChecker(),
-          ValidTicket.routeName:  (context) =>  const ValidTicket(),
-          AlreadyScanned.routeName:  (context) =>  const AlreadyScanned(),
-          IncorrectTicket.routeName:  (context) =>  const IncorrectTicket(),
-
+          ValidTicket.routeName: (context) => const ValidTicket(),
+          AlreadyScanned.routeName: (context) => const AlreadyScanned(),
+          IncorrectTicket.routeName: (context) => const IncorrectTicket(),
         },
       ),
     ),

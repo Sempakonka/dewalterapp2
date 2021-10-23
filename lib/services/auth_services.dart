@@ -22,26 +22,24 @@ Future tryToLoginAsScanner(
     if (row[2] != null) {
       bool isCorrectPassword = db.DBCrypt().checkpw(password, row[2]);
       if (isCorrectPassword) {
-
-        for (var element in row) {print(element); }
         if (row[6] == 3) {
           preferences.setString('username', username);
           ref.read(sessionNotifierProvider).setUser(
-              id: row[0],
-              name: row[1],
-              username: row[3],
-              email: row[4],
-              phone: row[5],
-              rank: row[6],
-              code: row[7],
-              status: row[8],
-          );
+                id: row[0],
+                name: row[1],
+                username: row[3],
+                email: row[4],
+                phone: row[5],
+                rank: row[6],
+                code: row[7],
+                status: row[8],
+              );
           return;
         } else {
           return Future.error("Incorrect at rank check");
         }
       } else {
-        return Future.error("Incorrect at isCorrectPassword ");
+        return Future.error("Incorrect at isCorrectPassword");
       }
     } else {
       return Future.error("Incorrect at is not null element");
