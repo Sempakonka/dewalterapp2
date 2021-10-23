@@ -31,7 +31,8 @@ class ChooseEvent extends ConsumerWidget {
                             .format(events[index].startDate)
                             .toString() +
                         " - " +
-                        events[index].startDate.year.toString()
+                        events[index].startDate.year.toString(),
+                    "eventId": events[index].id
                   }),
                   //    onTap: ()=> checkInTicket("67a6ab68-63a2-417a-8dca-16828eb41f72", DateTime(2020), 6),
                   title: Text(

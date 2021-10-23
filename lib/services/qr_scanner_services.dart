@@ -5,14 +5,9 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'database_service.dart';
 
-void onQRViewCreated(QRViewController controller) {
-  controller.scannedDataStream.listen((scanData) {
-    handleScannedCode(scanData.code, controller, context);
-  });
-}
 
 // checks if code is valid
-Future<bool> checkCode(String code) async {
+Future<bool> checkCode(String code, int eventId) async {
   bool resultOfCheckQrIDExistence;
   bool isAlreadyScanned;
 
@@ -24,7 +19,7 @@ Future<bool> checkCode(String code) async {
 
       if (!isAlreadyScanned) {
         var res = await checkSelectedEventIsEqualToTicketEvent(code);
-        if (res == /*selectedEvent*/ 0) {
+        if (res == eventId) {
           return true;
         }
       }
@@ -37,10 +32,10 @@ Future<bool> checkCode(String code) async {
 }
 
 void handleScannedCode(
-    String code, QRViewController controller, BuildContext context) async {
+    String code, QRViewController controller, BuildContext context, int eventId) async {
   controller.pauseCamera();
 
-  bool isValidCode = await checkCode(code);
+  bool isValidCode = await checkCode(code, eventId);
 
   isValidCode
       ? await Navigator.pushNamed(context, ValidTicket.routeName)

@@ -15,6 +15,17 @@ enum NavigationBarEvent { NEWS, EVENTS }
 final navigationNotifierProvider =
     ChangeNotifierProvider((ref) => NavigationNotifier(ref.read));
 
+class Singleton {
+  static final Singleton _instance = Singleton._internal();
+
+  factory Singleton() => _instance;
+
+ Widget body = const SignInPage();
+
+  Singleton._internal();
+}
+
+
 class NavigationNotifier extends ChangeNotifier {
   late final Reader read;
   int _currentIndex = 0;
@@ -23,29 +34,29 @@ class NavigationNotifier extends ChangeNotifier {
 
   NavigationNotifier(this.read);
 
-  late Widget _body = const SignInPage();
+  late Widget _body = Singleton().body;
 
   Widget get body => _body;
 
   void selectPage(int i, [final args]) {
     switch (i) {
       case 0:
-        _body = const SignInPage();
+        Singleton().body = const SignInPage();
         _currentIndex = 0;
         break;
       case 1:
-        _body = const LoginAsScanner();
+        Singleton().body = const LoginAsScanner();
         _currentIndex = 1;
         break;
       case 2:
-        _body = const ChooseEvent();
+        Singleton().body = const ChooseEvent();
         break;
       case 3:
-        _body = PeopleScannedOfEvent(args: args);
+        Singleton().body = PeopleScannedOfEvent(args: args);
 
         break;
       case 4:
-        _body = ScanTicketPage(args: args);
+        Singleton().body = ScanTicketPage(args: args);
         break;
       case 6:
         //    _body = AccountSettings();
@@ -128,7 +139,7 @@ class WorkSpace extends HookConsumerWidget {
                 topRight: Radius.circular(35),
               ),
             ),
-            child: pageModel.body);
+            child:  Singleton().body);
       },
     );
   }

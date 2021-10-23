@@ -8,15 +8,17 @@ class ValidTicket extends ConsumerWidget {
   const ValidTicket({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      body: Container(
-        color: Colors.green,
-        child: Column(
-          children: [
-            ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("go back"))
-          ],
+    return MaterialApp(
+      home: Scaffold(
+        body: Container(
+          color: Colors.green,
+          child: Column(
+            children: [
+              ElevatedButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("go back"))
+            ],
+          ),
         ),
       ),
     );
