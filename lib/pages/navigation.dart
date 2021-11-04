@@ -106,6 +106,9 @@ class WorkSpace extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // ignore: unused_local_variable
+    /// final gets used by riverpod but does not get picked up by dart analyser
+    final pageModel = ref.watch(navigationNotifierProvider);
     final _controller = useAnimationController(
         duration: duration, upperBound: endPoint, lowerBound: lowerBound);
 
