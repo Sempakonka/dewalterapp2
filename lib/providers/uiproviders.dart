@@ -48,3 +48,4 @@ class WorkSpaceProvider extends ChangeNotifier {
         dividedBy: dividedBy, reducedBy: kToolbarHeight);
   }
 }
+

@@ -1,3 +1,4 @@
+import 'package:de_walter_app_2/globals.dart';
 import 'package:de_walter_app_2/models/event.dart';
 import 'package:de_walter_app_2/pages/navigation.dart';
 import 'package:de_walter_app_2/providers/database_providers.dart';
@@ -22,18 +23,30 @@ class ChooseEvent extends ConsumerWidget {
               itemCount: events.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
-                  onTap: () =>
-                      ref.read(navigationNotifierProvider).selectPage(3,args: {
-                    'name': events[index].name,
-                    'date': events[index].startDate.day.toString() +
-                        " - " +
-                        DateFormat.MMMM()
-                            .format(events[index].startDate)
-                            .toString() +
-                        " - " +
-                        events[index].startDate.year.toString(),
-                    "eventId": events[index].id
-                  }),
+                  onTap: () {
+                    ref.read(navigationNotifierProvider).selectPage(3, args: {
+                      'name': events[index].name,
+                      'date': events[index].startDate.day.toString() +
+                          " - " +
+                          DateFormat.MMMM()
+                              .format(events[index].startDate)
+                              .toString() +
+                          " - " +
+                          events[index].startDate.year.toString(),
+                      "eventId": events[index].id
+                    });
+                    SelectedEventSingleton().selectedEvent = {
+                      'name': events[index].name,
+                      'date': events[index].startDate.day.toString() +
+                          " - " +
+                          DateFormat.MMMM()
+                              .format(events[index].startDate)
+                              .toString() +
+                          " - " +
+                          events[index].startDate.year.toString(),
+                      "eventId": events[index].id
+                    };
+                  },
                   //    onTap: ()=> checkInTicket("67a6ab68-63a2-417a-8dca-16828eb41f72", DateTime(2020), 6),
                   title: Text(
                     events[index].name,

@@ -16,7 +16,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 enum NavigationBarEvent { NEWS, EVENTS }
 
 final navigationNotifierProvider =
-    ChangeNotifierProvider((ref) => NavigationNotifier(ref.read));
+ChangeNotifierProvider((ref) => NavigationNotifier(ref.read));
 
 class Singleton {
   static final Singleton _instance = Singleton._internal();
@@ -44,14 +44,15 @@ class NavigationNotifier extends ChangeNotifier {
 
   ListQueue<int> get navigationHistory => _navigationHistory;
 
-  void pop([BuildContext? context]) {
+  void pop({BuildContext? context, final args}) {
     _reverse = true;
     _navigationHistory.removeLast();
     selectPage(_navigationHistory.last,
-        args: context, isPopRequest: true, reverse: true);
+        args: args, context: context, isPopRequest: true, reverse: true);
   }
 
-  void selectPage(int i, {final args, bool? isPopRequest, bool? reverse}) {
+  void selectPage(int i,
+      {final args, final context, bool? isPopRequest, bool? reverse}) {
     _reverse = reverse ?? false;
     isPopRequest = isPopRequest ?? false;
     print(_navigationHistory.last);
@@ -59,7 +60,7 @@ class NavigationNotifier extends ChangeNotifier {
     switch (i) {
       case 0:
         Singleton().body = const SignInPage();
-        read(workspaceNotifierProvider).setHeight(args, direction: 0);
+        read(workspaceNotifierProvider).setHeight(context, direction: 0);
         _currentIndex = 0;
         break;
       case 1:
@@ -77,7 +78,7 @@ class NavigationNotifier extends ChangeNotifier {
         Singleton().body = ScanTicketPage(args: args);
         break;
       case 6:
-        //    _body = AccountSettings();
+      //    _body = AccountSettings();
         break;
     }
     if (!isPopRequest) {
@@ -99,22 +100,31 @@ class NavigationBarScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     bool showBackButton =
-       !( ref.watch(navigationNotifierProvider).navigationHistory.length == 1);
+    !(ref
+        .watch(navigationNotifierProvider)
+        .navigationHistory
+        .length == 1);
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: showBackButton
           ? FloatingActionButton(
-              child: const Icon(Icons.arrow_back_outlined),
-              onPressed: () =>
-                  ref.watch(navigationNotifierProvider).pop(context),
-              backgroundColor: green,
-            )
+        child: const Icon(Icons.arrow_back_outlined),
+        onPressed: () =>
+            ref.watch(navigationNotifierProvider).pop(context: context, args: SelectedEventSingleton().selectedEvent),
+        backgroundColor: green,
+      )
           : Container(),
       body: SingleChildScrollView(
         child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width,
+          height: MediaQuery
+              .of(context)
+              .size
+              .height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: const [
@@ -144,21 +154,30 @@ class WorkSpace extends HookConsumerWidget {
     // ignore: unused_local_variable
     final pageModel = ref.watch(navigationNotifierProvider);
 
-    var _height = ref.watch(workspaceNotifierProvider).workSpaceHeight;
+    var _height = ref
+        .watch(workspaceNotifierProvider)
+        .workSpaceHeight;
 
-    var reverse = ref.watch(navigationNotifierProvider).reverse;
+    var reverse = ref
+        .watch(navigationNotifierProvider)
+        .reverse;
 
     SharedAxisTransitionType? _transitionType =
         SharedAxisTransitionType.horizontal;
 
     return AnimatedContainer(
       curve: Curves.easeInOutCubic,
-      onEnd: ref.watch(workspaceNotifierProvider).direction == 1
+      onEnd: ref
+          .watch(workspaceNotifierProvider)
+          .direction == 1
           ? () =>
           ref.read(navigationNotifierProvider).selectPage(1, args: context)
           : null,
       height: _height,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery
+          .of(context)
+          .size
+          .width,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -171,11 +190,9 @@ class WorkSpace extends HookConsumerWidget {
         key: key,
         duration: const Duration(milliseconds: 700),
         reverse: reverse,
-        transitionBuilder: (
-          Widget child,
-          Animation<double> animation,
-          Animation<double> secondaryAnimation,
-        ) {
+        transitionBuilder: (Widget child,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,) {
           return SharedAxisTransition(
             fillColor: Colors.transparent,
             child: child,
