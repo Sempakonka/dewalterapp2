@@ -26,7 +26,8 @@ dependencies:
   flutter_hooks: ^0.18.0
   hooks_riverpod: ^1.0.0-dev.8
   intl: ^0.17.0
-  flutter_sequence_animation: ^3.0.1
+  animations: ^2.0.2
+
 
 
 

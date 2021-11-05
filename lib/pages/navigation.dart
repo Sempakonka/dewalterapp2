@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:animations/animations.dart';
 import 'package:de_walter_app_2/globals.dart';
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
@@ -8,7 +9,6 @@ import 'package:de_walter_app_2/pages/scanner/scan_ticket_page.dart';
 import 'package:de_walter_app_2/pages/sign_in.dart';
 import 'package:de_walter_app_2/providers/uiproviders.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -34,16 +34,28 @@ class NavigationNotifier extends ChangeNotifier {
 
   int get currentIndex => _currentIndex;
 
+  bool _reverse = false;
+
+  bool get reverse => _reverse;
+
   NavigationNotifier(this.read);
 
-  ListQueue<int> navigationHistory = ListQueue.from([0]);
+  ListQueue<int> _navigationHistory = ListQueue.from([0]);
+
+  ListQueue<int> get navigationHistory => _navigationHistory;
 
   void pop([BuildContext? context]) {
-    navigationHistory.removeLast();
-    selectPage(navigationHistory.last, args: context, isPopRequest: 6);
+    _reverse = true;
+    _navigationHistory.removeLast();
+    selectPage(_navigationHistory.last,
+        args: context, isPopRequest: true, reverse: true);
   }
 
-  void selectPage(int i, {final args, int? isPopRequest}) {
+  void selectPage(int i, {final args, bool? isPopRequest, bool? reverse}) {
+    _reverse = reverse ?? false;
+    isPopRequest = isPopRequest ?? false;
+    print(_navigationHistory.last);
+    print(isPopRequest);
     switch (i) {
       case 0:
         Singleton().body = const SignInPage();
@@ -68,8 +80,8 @@ class NavigationNotifier extends ChangeNotifier {
         //    _body = AccountSettings();
         break;
     }
-    if (isPopRequest == null) {
-      navigationHistory.add(i);
+    if (!isPopRequest) {
+      _navigationHistory.add(i);
     }
     notifyListeners();
   }
@@ -86,15 +98,19 @@ class NavigationBarScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // context.read(newsPageNotifierProvider).getAllNewsItemsFromDatabase();
+    bool showBackButton =
+       !( ref.watch(navigationNotifierProvider).navigationHistory.length == 1);
 
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: ref.read(navigationNotifierProvider).navigationHistory.isNotEmpty ? FloatingActionButton(
-        child: const Icon(Icons.arrow_back_outlined),
-        onPressed: () => ref.watch(navigationNotifierProvider).pop(context),
-        backgroundColor: green,
-      ) : Container(),
+      floatingActionButton: showBackButton
+          ? FloatingActionButton(
+              child: const Icon(Icons.arrow_back_outlined),
+              onPressed: () =>
+                  ref.watch(navigationNotifierProvider).pop(context),
+              backgroundColor: green,
+            )
+          : Container(),
       body: SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -118,55 +134,58 @@ class NavigationBarScreen extends ConsumerWidget {
 }
 
 class WorkSpace extends HookConsumerWidget {
-  final Duration duration = const Duration(milliseconds: 400);
+  final Duration duration = const Duration(milliseconds: 600);
 
   const WorkSpace({Key? key}) : super(key: key);
-  static double endPoint = 600;
-  static double lowerBound = 350;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     /// The final gets used by riverpod but does not get picked up by dart analyser
     // ignore: unused_local_variable
     final pageModel = ref.watch(navigationNotifierProvider);
-    final _controller = useAnimationController(
-        duration: duration, upperBound: endPoint, lowerBound: lowerBound);
 
+    var _height = ref.watch(workspaceNotifierProvider).workSpaceHeight;
 
+    var reverse = ref.watch(navigationNotifierProvider).reverse;
 
-    var _direction = ref.watch(workspaceNotifierProvider).direction;
-    useValueChanged(_direction, (_, __) async {
-      if (_direction == 1) {
-        Animation<double>  animation = Tween<double>(begin: 0, end: 100).animate(_controller);
-        await _controller.forward().whenComplete(() => {
-              ref.read(navigationNotifierProvider).selectPage(1, args: context)
-            });
-      } else if (_direction == 0) {
-        await _controller
-            .animateBack(lowerBound, duration: duration)
-            .whenComplete(() => {
-                  ref
-                      .read(navigationNotifierProvider)
-                      .selectPage(0, args: context)
-                });
-      }
-    });
+    SharedAxisTransitionType? _transitionType =
+        SharedAxisTransitionType.horizontal;
 
-    return AnimatedBuilder(
-      animation: _controller,
-      builder: (context, child) {
-        return Container(
-            height: _controller.value,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(35),
-                topRight: Radius.circular(35),
-              ),
-            ),
-            child: Singleton().body);
-      },
+    return AnimatedContainer(
+      curve: Curves.easeInOutCubic,
+      onEnd: ref.watch(workspaceNotifierProvider).direction == 1
+          ? () =>
+          ref.read(navigationNotifierProvider).selectPage(1, args: context)
+          : null,
+      height: _height,
+      width: MediaQuery.of(context).size.width,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(35),
+          topRight: Radius.circular(35),
+        ),
+      ),
+      duration: duration,
+      child: PageTransitionSwitcher(
+        key: key,
+        duration: const Duration(milliseconds: 700),
+        reverse: reverse,
+        transitionBuilder: (
+          Widget child,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+        ) {
+          return SharedAxisTransition(
+            fillColor: Colors.transparent,
+            child: child,
+            animation: animation,
+            secondaryAnimation: secondaryAnimation,
+            transitionType: _transitionType,
+          );
+        },
+        child: Singleton().body,
+      ),
     );
   }
 }
