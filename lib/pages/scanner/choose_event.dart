@@ -23,7 +23,7 @@ class ChooseEvent extends ConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                   onTap: () =>
-                      ref.read(navigationNotifierProvider).selectPage(3, {
+                      ref.read(navigationNotifierProvider).selectPage(3,args: {
                     'name': events[index].name,
                     'date': events[index].startDate.day.toString() +
                         " - " +

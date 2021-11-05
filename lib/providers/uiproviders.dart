@@ -11,11 +11,20 @@ class WorkSpaceProvider extends ChangeNotifier {
 
   double? get workSpaceHeight => _workspaceHeight;
 
-  void setHeight(BuildContext context) async {
+  int _direction = 0;
+
+  int get direction => _direction;
+
+  void setHeight(BuildContext context, {required int direction}) async {
+    _direction = direction;
     double heightLarge = screenHeightExcludingToolbar(context) -
         MediaQuery.of(context).padding.top;
-   // double heightSmall = MediaQuery.of(context).size.height * 0.5;
-    _workspaceHeight = heightLarge;
+    double heightSmall = 400;
+    if(direction == 1) {
+      _workspaceHeight = heightLarge;
+    } else {
+      _workspaceHeight = heightSmall;
+    }
     notifyListeners();
   }
 

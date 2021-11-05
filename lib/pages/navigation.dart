@@ -1,3 +1,6 @@
+import 'dart:collection';
+
+import 'package:de_walter_app_2/globals.dart';
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/scanner/people_scanned_of_event_page.dart';
@@ -33,10 +36,18 @@ class NavigationNotifier extends ChangeNotifier {
 
   NavigationNotifier(this.read);
 
-  void selectPage(int i, [final args]) {
+  ListQueue<int> navigationHistory = ListQueue.from([0]);
+
+  void pop([BuildContext? context]) {
+    navigationHistory.removeLast();
+    selectPage(navigationHistory.last, args: context, isPopRequest: 6);
+  }
+
+  void selectPage(int i, {final args, int? isPopRequest}) {
     switch (i) {
       case 0:
         Singleton().body = const SignInPage();
+        read(workspaceNotifierProvider).setHeight(args, direction: 0);
         _currentIndex = 0;
         break;
       case 1:
@@ -57,6 +68,9 @@ class NavigationNotifier extends ChangeNotifier {
         //    _body = AccountSettings();
         break;
     }
+    if (isPopRequest == null) {
+      navigationHistory.add(i);
+    }
     notifyListeners();
   }
 }
@@ -75,6 +89,12 @@ class NavigationBarScreen extends ConsumerWidget {
     // context.read(newsPageNotifierProvider).getAllNewsItemsFromDatabase();
 
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      floatingActionButton: ref.read(navigationNotifierProvider).navigationHistory.isNotEmpty ? FloatingActionButton(
+        child: const Icon(Icons.arrow_back_outlined),
+        onPressed: () => ref.watch(navigationNotifierProvider).pop(context),
+        backgroundColor: green,
+      ) : Container(),
       body: SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
@@ -106,21 +126,30 @@ class WorkSpace extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    /// The final gets used by riverpod but does not get picked up by dart analyser
     // ignore: unused_local_variable
-    /// final gets used by riverpod but does not get picked up by dart analyser
     final pageModel = ref.watch(navigationNotifierProvider);
     final _controller = useAnimationController(
         duration: duration, upperBound: endPoint, lowerBound: lowerBound);
 
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        ref.read(navigationNotifierProvider).selectPage(1);
-      }
-    });
 
-    final _height = ref.watch(workspaceNotifierProvider).workSpaceHeight;
-    useValueChanged(_height, (_, __) async {
-      _controller.forward();
+
+    var _direction = ref.watch(workspaceNotifierProvider).direction;
+    useValueChanged(_direction, (_, __) async {
+      if (_direction == 1) {
+        Animation<double>  animation = Tween<double>(begin: 0, end: 100).animate(_controller);
+        await _controller.forward().whenComplete(() => {
+              ref.read(navigationNotifierProvider).selectPage(1, args: context)
+            });
+      } else if (_direction == 0) {
+        await _controller
+            .animateBack(lowerBound, duration: duration)
+            .whenComplete(() => {
+                  ref
+                      .read(navigationNotifierProvider)
+                      .selectPage(0, args: context)
+                });
+      }
     });
 
     return AnimatedBuilder(

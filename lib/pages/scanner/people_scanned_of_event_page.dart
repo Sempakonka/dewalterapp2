@@ -81,12 +81,12 @@ class PeopleScannedOfEvent extends ConsumerWidget {
                   child: ElevatedButton(
                     onPressed: () async => ref
                         .read(navigationNotifierProvider)
-                        .selectPage(4, args),
+                        .selectPage(4, args: args),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "Tickets scannen",
+                          "Tickets Scannen",
                           style: TextStyle(
                               fontSize: Theme.of(context)
                                   .textTheme

@@ -57,7 +57,7 @@ class SignInPage extends HookConsumerWidget {
                     child: ElevatedButton(
                       onPressed: () => ref
                           .read(workspaceNotifierProvider)
-                          .setHeight(context),
+                          .setHeight(context, direction: 1),
                       child: Row(
                         children: [
                           Text(
@@ -85,7 +85,7 @@ class SignInPage extends HookConsumerWidget {
                   ),
                   ElevatedButton(
                     onPressed: () =>
-                        ref.read(workspaceNotifierProvider).setHeight(context),
+                        ref.read(workspaceNotifierProvider).setHeight(context, direction: 1),
                     child: Row(
                       children: [
                         Text(
