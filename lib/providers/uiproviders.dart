@@ -49,3 +49,6 @@ class WorkSpaceProvider extends ChangeNotifier {
   }
 }
 
+final formControllerProvider =
+StateProvider<TextEditingController>((ref) => TextEditingController());
+
