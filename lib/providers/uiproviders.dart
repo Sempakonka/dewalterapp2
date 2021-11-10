@@ -17,10 +17,15 @@ class WorkSpaceProvider extends ChangeNotifier {
 
   void setHeight(BuildContext context, {required int direction}) async {
     _direction = direction;
-    double heightLarge = screenHeightExcludingToolbar(context) -
-        MediaQuery.of(context).padding.top;
-    double heightSmall = 400;
-    if(direction == 1) {
+    double heightLarge = (screenHeightExcludingToolbar(context) -
+            MediaQuery.of(context).padding.top) /
+        100 *
+        88;
+    double heightSmall = (screenHeightExcludingToolbar(context) -
+            MediaQuery.of(context).padding.top) /
+        100 *
+        40;
+    if (direction == 1) {
       _workspaceHeight = heightLarge;
     } else {
       _workspaceHeight = heightSmall;
@@ -43,3 +48,7 @@ class WorkSpaceProvider extends ChangeNotifier {
         dividedBy: dividedBy, reducedBy: kToolbarHeight);
   }
 }
+
+final formControllerProvider =
+StateProvider<TextEditingController>((ref) => TextEditingController());
+
