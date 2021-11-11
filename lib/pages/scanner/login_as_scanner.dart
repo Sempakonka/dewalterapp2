@@ -16,134 +16,140 @@ class LoginAsScanner extends ConsumerWidget {
     final _usernameController = TextEditingController();
     final _passwordController = TextEditingController();
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-              width: double.infinity,
-              child: Text(
-                "Welkom scanner",
-                style: Theme.of(context).textTheme.headline1,
-              )),
-          SizedBox(
-              width: double.infinity,
-              child: Text(
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-                "sed do eiusmod tempor incididunt ut labore et dolore "
-                "magna aliqua. Ut enim ad minim veniam, quis nostrud "
-                "exercitation ullamco laboris nisi ut",
-                style: TextStyle(
-                    fontSize: Theme.of(context).textTheme.bodyText2!.fontSize,
-                    color: Colors.black87),
-              )),
-          Form(
-            key: _passwordFormKey,
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 40, 0, 8),
-                  child: TextFormField(
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                      //     errorText: "Wrong password",
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(14),
+    return Material(
+      color: Colors.transparent,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+                width: double.infinity,
+                child: Text(
+                  "Welkom scanner",
+                  style: Theme.of(context).textTheme.headline1,
+                )),
+            SizedBox(
+                width: double.infinity,
+                child: Text(
+                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
+                  "sed do eiusmod tempor incididunt ut labore et dolore "
+                  "magna aliqua. Ut enim ad minim veniam, quis nostrud "
+                  "exercitation ullamco laboris nisi ut",
+                  style: TextStyle(
+                      fontSize: Theme.of(context).textTheme.bodyText2!.fontSize,
+                      color: Colors.black87),
+                )),
+            Form(
+              key: _passwordFormKey,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 40, 0, 8),
+                    child: TextFormField(
+                      controller: _usernameController,
+                      decoration: InputDecoration(
+                        //     errorText: "Wrong password",
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        filled: true,
+                        labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText2!.fontSize,
+                            color: Colors.black38),
+                        labelText: "Gebruikersnaam",
+                        fillColor: Colors.black12,
                       ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      filled: true,
-                      labelStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize:
-                              Theme.of(context).textTheme.bodyText2!.fontSize,
-                          color: Colors.black38),
-                      labelText: "Gebruikersnaam",
-                      fillColor: Colors.black12,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Field is empty";
+                        }
+                      },
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Field is empty";
-                      }
-                    },
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                  child: TextFormField(
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(14),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                        filled: true,
+                        labelStyle: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText2!.fontSize,
+                            color: Colors.black38),
+                        labelText: "Wachtwoord",
+                        fillColor: Colors.black12,
                       ),
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
-                      filled: true,
-                      labelStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize:
-                              Theme.of(context).textTheme.bodyText2!.fontSize,
-                          color: Colors.black38),
-                      labelText: "Wachtwoord",
-                      fillColor: Colors.black12,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Field is empty";
+                        }
+                      },
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Field is empty";
-                      }
-                    },
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: ElevatedButton(
-                onPressed: () async {
-                  if (_passwordFormKey.currentState!.validate()) {
-                    await _auth
-                        .tryToLoginAsScanner(_usernameController.text,
-                            _passwordController.text, ref)
-                        .then((value) =>
-                            ref.read(navigationNotifierProvider).selectPage(2))
-                        .onError((error, stackTrace) => showModal<void>(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return _ExampleAlertDialog();
-                              },
-                            ));
-                  }
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Inloggen",
-                      style: TextStyle(
-                          fontSize:
-                              Theme.of(context).textTheme.bodyText2!.fontSize),
-                    ),
-                    const Icon(Icons.arrow_forward_rounded)
-                  ],
-                ),
-                style: ElevatedButton.styleFrom(
-                    primary: green,
-                    //background color of button
-                    //elevation of button
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    padding:
-                        const EdgeInsets.all(10) //content padding inside button
-                    ),
+                ],
               ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (_passwordFormKey.currentState!.validate()) {
+                      await _auth
+                          .tryToLoginAsScanner(_usernameController.text,
+                              _passwordController.text, ref)
+                          .then((value) =>
+                              ref.read(navigationNotifierProvider).selectPage(2))
+                          .onError((error, stackTrace) {
+                            print(error);
+                        showModal<void>(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return _ExampleAlertDialog();
+                          },
+                        );
+                      });
+                    }
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Inloggen",
+                        style: TextStyle(
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText2!.fontSize),
+                      ),
+                      const Icon(Icons.arrow_forward_rounded)
+                    ],
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      primary: green,
+                      //background color of button
+                      //elevation of button
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      padding:
+                          const EdgeInsets.all(10) //content padding inside button
+                      ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -165,7 +171,10 @@ class _ExampleAlertDialog extends StatelessWidget {
           children: <Widget>[
             const Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text("Wrong username or password", textAlign: TextAlign.center,),
+              child: Text(
+                "Wrong username or password",
+                textAlign: TextAlign.center,
+              ),
             ),
             InkWell(
               onTap: () => Navigator.pop(context),

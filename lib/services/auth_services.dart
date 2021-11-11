@@ -30,9 +30,7 @@ Future tryToLoginAsScanner(
                 username: row[3],
                 email: row[4],
                 phone: row[5],
-                rank: row[6],
-                code: row[7],
-                status: row[8],
+                rank: row[6]
               );
           return;
         } else {
