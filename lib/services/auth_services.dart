@@ -21,17 +21,16 @@ Future tryToLoginAsScanner(
   for (var row in result) {
     if (row[2] != null) {
       bool isCorrectPassword = db.DBCrypt().checkpw(password, row[2]);
+
       if (isCorrectPassword) {
         if (row[6] == 3) {
-          preferences.setString('username', username);
           ref.read(sessionNotifierProvider).setUser(
-                id: row[0],
-                name: row[1],
-                username: row[3],
-                email: row[4],
-                phone: row[5],
-                rank: row[6]
-              );
+              id: row[0],
+              name: row[1],
+              username: row[3],
+              email: row[4],
+              phone: row[5],
+              rank: row[6]);
           return;
         } else {
           return Future.error("Incorrect at rank check");

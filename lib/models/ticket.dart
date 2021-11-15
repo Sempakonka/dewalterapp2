@@ -10,7 +10,9 @@ class Ticket {
       this.scannedAt,
       this.scannedBy,
       required this.tickedCode,
-      this.userCommission});
+      this.userCommission,
+      this.prePayment,
+      required this.ticketPrice});
 
   int id;
   int eventId;
@@ -22,5 +24,8 @@ class Ticket {
   DateTime? scannedAt;
   int? scannedBy;
   String tickedCode;
-  int? userCommission;
+  double? userCommission;
+  double? prePayment;
+  double? ticketPrice;
+
 }

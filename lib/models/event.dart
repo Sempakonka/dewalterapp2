@@ -20,7 +20,8 @@ class Event {
   String banner;
   String description;
   String location;
-  int prePayment;
-  int commission;
+  double prePayment;
+  double commission;
   int createdBy;
+  ///TODO: add category
 }

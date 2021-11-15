@@ -24,8 +24,8 @@ Future<List<Event>> getAllActiveEvents() async {
         banner: row[5],
         description: row[6].toString(),
         location: row[7],
-        prePayment: row[8],
-        commission: row[9],
+        prePayment: double.parse((row[8].toStringAsFixed(2))),
+        commission: double.parse(( row[9].toStringAsFixed(2))),
         createdBy: row[10]));
   }
 
@@ -34,7 +34,7 @@ Future<List<Event>> getAllActiveEvents() async {
   return eventsList;
 }
 
-Future<List<Ticket>> getTicketAtScannedBy(int userId) async {
+Future<List<Ticket>> getTicketAtScannedByAndEventId(int userId, int eventId) async {
   final conn = await MySqlConnection.connect(ConnectionSettings(
       host: '185.104.29.16',
       port: 3306,
@@ -43,7 +43,7 @@ Future<List<Ticket>> getTicketAtScannedBy(int userId) async {
       password: '4TjTcdnE'));
 
   var result =
-      await conn.query('select * from tickets where scanned_by = ?', [userId]);
+      await conn.query('select * from tickets where scanned_by = ? and event_id = ?', [userId, eventId]);
   await conn.close();
 
   List<Ticket> tickets = [];
@@ -58,8 +58,14 @@ Future<List<Ticket>> getTicketAtScannedBy(int userId) async {
         createdBy: row[6],
         scannedAt: row[7],
         scannedBy: row[8],
-        tickedCode: row[9]));
+        tickedCode: row[9],
+        userCommission:  double.parse((row[10]).toStringAsFixed(2)),
+        prePayment:  double.parse((row[11]).toStringAsFixed(2)),
+        ticketPrice:  double.parse((row[12]).toStringAsFixed(2))
+    ));
   }
+  tickets.forEach((element) {print(element); });
+
 
   return tickets;
 }
@@ -141,7 +147,7 @@ Future checkInTicket(
   }
 }
 
-Future getTicketByCode(String ticketCode) async {
+Future<Ticket?> getTicketByCode(String ticketCode) async {
   final conn = await MySqlConnection.connect(ConnectionSettings(
       host: '185.104.29.16',
       port: 3306,
@@ -162,7 +168,13 @@ Future getTicketByCode(String ticketCode) async {
         email: row[4],
         createdAt: row[5],
         createdBy: row[6],
-        tickedCode: row[9]);
+        scannedAt: row[7],
+        scannedBy: row[8],
+        tickedCode: row[9],
+        userCommission:  double.parse((row[10]).toStringAsFixed(2)),
+        prePayment:  double.parse((row[11]).toStringAsFixed(2)),
+        ticketPrice:  double.parse((row[12]).toStringAsFixed(2))
+    );
   }
   return null;
 }

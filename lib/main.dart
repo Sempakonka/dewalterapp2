@@ -46,7 +46,6 @@ class AuthChecker extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final _authState = ref.watch(sessionNotifierProvider);
-    //   _authState.uid == null ? const SignInPage() : ChooseEventPage();
     if (_authState.user == null) {
       return const NavigationBarScreen();
     } else {

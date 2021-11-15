@@ -1,12 +1,14 @@
 import 'dart:collection';
 
 import 'package:animations/animations.dart';
-import 'package:de_walter_app_2/globals.dart';
+import 'package:de_walter_app_2/globals.dart' ;
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/scanner/people_scanned_of_event_page.dart';
 import 'package:de_walter_app_2/pages/scanner/scan_ticket_page.dart';
 import 'package:de_walter_app_2/pages/sign_in.dart';
+import 'package:de_walter_app_2/providers/auth_providers.dart';
+import 'package:de_walter_app_2/providers/database_providers.dart';
 import 'package:de_walter_app_2/providers/uiproviders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,8 +71,10 @@ class NavigationNotifier extends ChangeNotifier {
         Singleton().body = const ChooseEvent();
         break;
       case 3:
-        Singleton().body = PeopleScannedOfEvent(args: args);
+        read(ticketsAtScannedByProvider)
+            .fetchTickets(read(sessionNotifierProvider).user!.id, args['eventId']);
 
+        Singleton().body = PeopleScannedOfEvent(args: args);
         break;
       case 4:
         Singleton().body = ScanTicketPage(args: args);
