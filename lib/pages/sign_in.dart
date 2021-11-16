@@ -57,7 +57,7 @@ class SignInPage extends HookConsumerWidget {
                     child: ElevatedButton(
                       onPressed: () => ref
                           .read(workspaceNotifierProvider)
-                          .setHeight(context, direction: 1),
+                          .setHeight(context, direction: 1, pageToGoOnEnd: 1),
                       child: Row(
                         children: [
                           Text(
@@ -85,11 +85,11 @@ class SignInPage extends HookConsumerWidget {
                   ),
                   ElevatedButton(
                     onPressed: () =>
-                        ref.read(workspaceNotifierProvider).setHeight(context, direction: 1),
+                        ref.read(workspaceNotifierProvider).setHeight(context, direction: 1, pageToGoOnEnd: 5),
                     child: Row(
                       children: [
                         Text(
-                          "Propper",
+                          "Seller",
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                         const Icon(

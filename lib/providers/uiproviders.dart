@@ -15,7 +15,14 @@ class WorkSpaceProvider extends ChangeNotifier {
 
   int get direction => _direction;
 
-  void setHeight(BuildContext context, {required int direction}) async {
+  int? _pageToGoOnEnd = 0;
+
+  int? get pageToGoOnEnd => _pageToGoOnEnd;
+
+  void setHeight(BuildContext context, {required int direction, int? pageToGoOnEnd}) async {
+
+    _pageToGoOnEnd = pageToGoOnEnd;
+
     _direction = direction;
     double heightLarge = (screenHeightExcludingToolbar(context) -
             MediaQuery.of(context).padding.top) /

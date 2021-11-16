@@ -6,51 +6,45 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../globals.dart';
 
-class PeopleScannedOfEvent extends ConsumerWidget {
-  const PeopleScannedOfEvent({Key? key, required this.args}) : super(key: key);
+class HistoryOfTicketsMade extends ConsumerWidget {
+  const HistoryOfTicketsMade({Key? key}) : super(key: key);
 
-  final args;
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var events = ref.watch(ticketsAtScannedByProvider).tickets;
+    var events = ref.watch(ticketsAtCreatedByProvider).tickets;
 
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
         children: [
-          Text("voor ${args["name"]}",
+          Text("Scanned tickets",
               style: TextStyle(
                   fontSize: Theme.of(context).textTheme.headline1!.fontSize,
                   color: Colors.black87,
                   fontWeight:
-                      Theme.of(context).textTheme.headline1!.fontWeight)),
-          Text(args["date"],
-              style: TextStyle(
-                  fontSize: Theme.of(context).textTheme.bodyText2!.fontSize,
-                  color: Colors.black38,
-                  fontWeight:
-                      Theme.of(context).textTheme.bodyText2!.fontWeight)),
+                  Theme.of(context).textTheme.headline1!.fontWeight)),
+
           Expanded(
             child: Scrollbar(
               child: ListView.builder(
                 itemCount: events.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
-                    onTap: () => ref.read(navigationNotifierProvider).selectPage(7),
                     title: Text(
                       events[index].name,
                       style: TextStyle(
                           fontWeight:
-                              Theme.of(context).textTheme.headline2!.fontWeight,
+                          Theme.of(context).textTheme.headline2!.fontWeight,
                           fontSize:
-                              Theme.of(context).textTheme.headline2!.fontSize),
+                          Theme.of(context).textTheme.headline2!.fontSize),
                     ),
                     subtitle: Text(
                       "event: " + events[index].eventId.toString(),
                       style: TextStyle(
                           fontSize:
-                              Theme.of(context).textTheme.bodyText2!.fontSize,
+                          Theme.of(context).textTheme.bodyText2!.fontSize,
                           color: Colors.black38,
                           fontWeight: Theme.of(context)
                               .textTheme
@@ -67,17 +61,15 @@ class PeopleScannedOfEvent extends ConsumerWidget {
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.5,
               child: ElevatedButton(
-                onPressed: () async => ref
-                    .read(navigationNotifierProvider)
-                    .selectPage(4, args: args),
+                onPressed: () {},
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Tickets Scannen",
+                      "Tickets aanmaken",
                       style: TextStyle(
                           fontSize:
-                              Theme.of(context).textTheme.bodyText2!.fontSize),
+                          Theme.of(context).textTheme.bodyText2!.fontSize),
                     ),
                     const Icon(Icons.arrow_forward_rounded)
                   ],
@@ -90,8 +82,8 @@ class PeopleScannedOfEvent extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     padding:
-                        const EdgeInsets.all(10) //content padding inside button
-                    ),
+                    const EdgeInsets.all(10) //content padding inside button
+                ),
               ),
             ),
           ),

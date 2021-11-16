@@ -20,3 +20,16 @@ class TicketsAtScannedByNotifier extends ChangeNotifier{
     notifyListeners();
   }
 }
+
+final ticketsAtCreatedByProvider = ChangeNotifierProvider((ref) => TicketsAtScannedByNotifier());
+
+class TicketsAtCreatedByNotifier extends ChangeNotifier{
+  List<Ticket> _tickets = [];
+  List<Ticket> get tickets => _tickets;
+
+  void fetchTickets(int uid) async{
+    _tickets = await getTicketsAtCreatedBy(uid);
+    notifyListeners();
+  }
+}
+
