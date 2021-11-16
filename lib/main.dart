@@ -4,6 +4,7 @@ import 'package:de_walter_app_2/pages/scanner/incorrect_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/scanner/valid_ticked.dart';
 import 'package:de_walter_app_2/providers/auth_providers.dart';
+import 'package:de_walter_app_2/providers/uiproviders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -43,8 +44,14 @@ Future<void> main() async {
 class AuthChecker extends ConsumerWidget {
   const AuthChecker({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Future.delayed(Duration.zero,
+        () =>   ref.read(workspaceNotifierProvider).setHeight(context, direction: 0)
+    );
+
     final _authState = ref.watch(sessionNotifierProvider);
     if (_authState.user == null) {
       return const NavigationBarScreen();

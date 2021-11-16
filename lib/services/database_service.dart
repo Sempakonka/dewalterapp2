@@ -34,8 +34,8 @@ Future<List<Event>> getAllActiveEvents() async {
   return eventsList;
 }
 
-Future<List<Ticket>> getTicketAtScannedByAndEventId(
-    int userId, int eventId) async {
+Future<List<Ticket>> getTicketAtScannedByAndEventId(int userId,
+    int eventId) async {
   final conn = await MySqlConnection.connect(ConnectionSettings(
       host: '185.104.29.16',
       port: 3306,
@@ -163,8 +163,8 @@ Future checkSelectedEventIsEqualToTicketEvent(String ticketCode) async {
   }
 }
 
-Future checkInTicket(
-    String ticketCode, DateTime scannedAt, int scannedBy) async {
+Future checkInTicket(String ticketCode, DateTime scannedAt,
+    int scannedBy) async {
   scannedAt = scannedAt.toUtc();
   final conn = await MySqlConnection.connect(ConnectionSettings(
       host: '185.104.29.16',
@@ -175,9 +175,10 @@ Future checkInTicket(
 
   var result = await conn.query(
       'update tickets set '
-      'scanned_at = ?,'
-      'scanned_by = ? '
-      'where ticket_code = ?',
+          'scanned_at = ?,'
+          'scanned_by = ?,'
+          'status = 1'
+          'where ticket_code = ?',
       [scannedAt, scannedBy, ticketCode]);
   await conn.close();
   for (var row in result) {
@@ -212,6 +213,36 @@ Future<Ticket?> getTicketByCode(String ticketCode) async {
         userCommission: double.parse((row[10]).toStringAsFixed(2)),
         prePayment: double.parse((row[11]).toStringAsFixed(2)),
         ticketPrice: double.parse((row[12]).toStringAsFixed(2)));
+  }
+  return null;
+}
+
+
+Future<Event?> getEventById(int eventId) async {
+  final conn = await MySqlConnection.connect(ConnectionSettings(
+      host: '185.104.29.16',
+      port: 3306,
+      user: 'u9894p21510_app',
+      db: 'u9894p21510_app',
+      password: '4TjTcdnE'));
+
+  var result = await conn
+      .query('select * from events where id = ?', [eventId]);
+  await conn.close();
+
+  for (var row in result) {
+    return Event(
+        id: row[0],
+        name: row[1],
+        status: row[2],
+        startDate: row[3],
+        endDate: row[4],
+        banner: row[5],
+        description: row[6].toString(),
+        location: row[7],
+        prePayment: double.parse((row[8].toStringAsFixed(2))),
+        commission: double.parse((row[9].toStringAsFixed(2))),
+        createdBy: row[10]);
   }
   return null;
 }

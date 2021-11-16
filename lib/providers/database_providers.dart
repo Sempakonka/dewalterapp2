@@ -9,6 +9,14 @@ final eventsProvider = FutureProvider<List<Event>>((ref) async {
   return content;
 });
 
+final isScannedProvider = FutureProvider.family<bool, String>((ref, ticketCode) async {
+  return await checkIfAlreadyScanned(ticketCode);
+});
+
+final eventAtIdProvider =  FutureProvider.family<Event?, int>((ref, eventId) async {
+  return await getEventById(eventId);
+});
+
 final ticketsAtScannedByProvider = ChangeNotifierProvider((ref) => TicketsAtScannedByNotifier());
 
 class TicketsAtScannedByNotifier extends ChangeNotifier{

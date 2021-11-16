@@ -37,7 +37,7 @@ class PeopleScannedOfEvent extends ConsumerWidget {
                 itemCount: events.length,
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
-                    onTap: () => ref.read(navigationNotifierProvider).selectPage(7),
+                    onTap: () => ref.read(navigationNotifierProvider).selectPage(7, args: events[index]),
                     title: Text(
                       events[index].name,
                       style: TextStyle(
