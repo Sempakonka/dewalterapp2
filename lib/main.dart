@@ -4,6 +4,7 @@ import 'package:de_walter_app_2/pages/scanner/incorrect_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/scanner/valid_ticked.dart';
 import 'package:de_walter_app_2/providers/auth_providers.dart';
+import 'package:de_walter_app_2/providers/uiproviders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -43,14 +44,24 @@ Future<void> main() async {
 class AuthChecker extends ConsumerWidget {
   const AuthChecker({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (!ref.read(workspaceNotifierProvider).workSpaceIsInit) {
+      Future.delayed(Duration.zero,
+              () =>
+              ref.read(workspaceNotifierProvider).setHeight(
+                  context, direction: 0)
+      );
+      ref.read(workspaceNotifierProvider).setWorkSpaceIsInt(true);
+    }
+
     final _authState = ref.watch(sessionNotifierProvider);
-    //   _authState.uid == null ? const SignInPage() : ChooseEventPage();
     if (_authState.user == null) {
       return const NavigationBarScreen();
     } else {
-      return const LoginAsScanner();
+      return const NavigationBarScreen();
     }
   }
 }

@@ -4,8 +4,6 @@ class User {
       required this.name,
       required this.username,
       required this.email,
-      required this.code,
-      required this.status,
       required this.phone,
       required this.rank});
 
@@ -15,6 +13,5 @@ class User {
   String email;
   String phone;
   int rank;
-  int code;
-  String status;
+
 }

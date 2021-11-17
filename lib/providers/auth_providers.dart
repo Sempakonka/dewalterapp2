@@ -17,15 +17,12 @@ class SessionNotifier extends ChangeNotifier {
       required String email,
       required String phone,
       required int rank,
-      required int code,
-      required var status}) async {
+}) async {
     _user = User(
         id: id,
         name: name,
         username: username,
         email: email,
-        code: code,
-        status: status,
         phone: phone,
         rank: rank);
   }

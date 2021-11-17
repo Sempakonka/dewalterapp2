@@ -1,12 +1,17 @@
 import 'dart:collection';
 
 import 'package:animations/animations.dart';
-import 'package:de_walter_app_2/globals.dart';
+import 'package:de_walter_app_2/globals.dart' ;
+import 'package:de_walter_app_2/pages/sales/history_of_tickets_made.dart';
+import 'package:de_walter_app_2/pages/sales/login_as_seller.dart';
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/scanner/people_scanned_of_event_page.dart';
 import 'package:de_walter_app_2/pages/scanner/scan_ticket_page.dart';
 import 'package:de_walter_app_2/pages/sign_in.dart';
+import 'package:de_walter_app_2/pages/ticket_viewer.dart';
+import 'package:de_walter_app_2/providers/auth_providers.dart';
+import 'package:de_walter_app_2/providers/database_providers.dart';
 import 'package:de_walter_app_2/providers/uiproviders.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -69,14 +74,22 @@ class NavigationNotifier extends ChangeNotifier {
         Singleton().body = const ChooseEvent();
         break;
       case 3:
-        Singleton().body = PeopleScannedOfEvent(args: args);
+        read(ticketsAtScannedByProvider)
+            .fetchTickets(read(sessionNotifierProvider).user!.id, args['eventId']);
 
+        Singleton().body = PeopleScannedOfEvent(args: args);
         break;
       case 4:
         Singleton().body = ScanTicketPage(args: args);
         break;
+      case 5:
+        Singleton().body = const LoginAsSeller();
+        break;
       case 6:
-        //    _body = AccountSettings();
+        Singleton().body = const HistoryOfTicketsMade();
+        break;
+      case 7:
+        Singleton().body = TicketViewer(args: args);
         break;
     }
     if (!isPopRequest) {
@@ -140,7 +153,7 @@ class WorkSpace extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    /// The final gets used by riverpod but does not get picked up by dart analyser
+    /// The final pageModel gets used by riverpod but does not get picked up by dart analyser
     // ignore: unused_local_variable
     final pageModel = ref.watch(navigationNotifierProvider);
 
@@ -151,11 +164,14 @@ class WorkSpace extends HookConsumerWidget {
     SharedAxisTransitionType? _transitionType =
         SharedAxisTransitionType.horizontal;
 
+    final _pageToGoOnEnd =  ref.watch(workspaceNotifierProvider).pageToGoOnEnd;
+
     return AnimatedContainer(
       curve: Curves.easeInOutCubic,
-      onEnd: ref.watch(workspaceNotifierProvider).direction == 1
+      /// If navigation action is cominng from the root
+      onEnd: ref.watch(workspaceNotifierProvider).direction == 1 && _pageToGoOnEnd != null
           ? () =>
-              ref.read(navigationNotifierProvider).selectPage(1, args: context)
+              ref.read(navigationNotifierProvider).selectPage(_pageToGoOnEnd, args: context)
           : null,
       height: _height,
       width: MediaQuery.of(context).size.width,

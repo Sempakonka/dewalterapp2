@@ -15,7 +15,23 @@ class WorkSpaceProvider extends ChangeNotifier {
 
   int get direction => _direction;
 
-  void setHeight(BuildContext context, {required int direction}) async {
+  int? _pageToGoOnEnd = 0;
+
+  int? get pageToGoOnEnd => _pageToGoOnEnd;
+
+  bool _workspaceIsInit = false;
+
+  bool get workSpaceIsInit => _workspaceIsInit;
+
+  void setWorkSpaceIsInt(bool value) {
+    _workspaceIsInit = value;
+    notifyListeners();
+  }
+
+  void setHeight(BuildContext context,
+      {required int direction, int? pageToGoOnEnd}) async {
+    _pageToGoOnEnd = pageToGoOnEnd;
+
     _direction = direction;
     double heightLarge = (screenHeightExcludingToolbar(context) -
             MediaQuery.of(context).padding.top) /
@@ -24,7 +40,7 @@ class WorkSpaceProvider extends ChangeNotifier {
     double heightSmall = (screenHeightExcludingToolbar(context) -
             MediaQuery.of(context).padding.top) /
         100 *
-        40;
+        50;
     if (direction == 1) {
       _workspaceHeight = heightLarge;
     } else {
@@ -50,5 +66,4 @@ class WorkSpaceProvider extends ChangeNotifier {
 }
 
 final formControllerProvider =
-StateProvider<TextEditingController>((ref) => TextEditingController());
-
+    StateProvider<TextEditingController>((ref) => TextEditingController());

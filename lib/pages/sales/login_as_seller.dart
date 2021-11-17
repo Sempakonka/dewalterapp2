@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../globals.dart';
 import '../navigation.dart';
 
-class LoginAsScanner extends ConsumerWidget {
-  const LoginAsScanner({Key? key}) : super(key: key);
+class LoginAsSeller extends ConsumerWidget {
+  const LoginAsSeller({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -26,16 +26,16 @@ class LoginAsScanner extends ConsumerWidget {
             SizedBox(
                 width: double.infinity,
                 child: Text(
-                  "Welkom scanner",
+                  "Welcome seller",
                   style: Theme.of(context).textTheme.headline1,
                 )),
             SizedBox(
                 width: double.infinity,
                 child: Text(
                   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-                  "sed do eiusmod tempor incididunt ut labore et dolore "
-                  "magna aliqua. Ut enim ad minim veniam, quis nostrud "
-                  "exercitation ullamco laboris nisi ut",
+                      "sed do eiusmod tempor incididunt ut labore et dolore "
+                      "magna aliqua. Ut enim ad minim veniam, quis nostrud "
+                      "exercitation ullamco laboris nisi ut",
                   style: TextStyle(
                       fontSize: Theme.of(context).textTheme.bodyText2!.fontSize,
                       color: Colors.black87),
@@ -59,7 +59,7 @@ class LoginAsScanner extends ConsumerWidget {
                         labelStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize:
-                                Theme.of(context).textTheme.bodyText2!.fontSize,
+                            Theme.of(context).textTheme.bodyText2!.fontSize,
                             color: Colors.black38),
                         labelText: "Gebruikersnaam",
                         fillColor: Colors.black12,
@@ -85,7 +85,7 @@ class LoginAsScanner extends ConsumerWidget {
                         labelStyle: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize:
-                                Theme.of(context).textTheme.bodyText2!.fontSize,
+                            Theme.of(context).textTheme.bodyText2!.fontSize,
                             color: Colors.black38),
                         labelText: "Wachtwoord",
                         fillColor: Colors.black12,
@@ -108,12 +108,12 @@ class LoginAsScanner extends ConsumerWidget {
                   onPressed: () async {
                     if (_passwordFormKey.currentState!.validate()) {
                       await _auth
-                          .tryToLoginAsScanner(_usernameController.text,
-                              _passwordController.text, ref)
+                          .tryToLoginAsSeller(_usernameController.text,
+                          _passwordController.text, ref)
                           .then((value) =>
-                              ref.read(navigationNotifierProvider).selectPage(2))
+                          ref.read(navigationNotifierProvider).selectPage(6))
                           .onError((error, stackTrace) {
-                            print(error);
+                        print(error);
                         showModal<void>(
                           context: context,
                           builder: (BuildContext context) {
@@ -130,7 +130,7 @@ class LoginAsScanner extends ConsumerWidget {
                         "Inloggen",
                         style: TextStyle(
                             fontSize:
-                                Theme.of(context).textTheme.bodyText2!.fontSize),
+                            Theme.of(context).textTheme.bodyText2!.fontSize),
                       ),
                       const Icon(Icons.arrow_forward_rounded)
                     ],
@@ -143,8 +143,8 @@ class LoginAsScanner extends ConsumerWidget {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       padding:
-                          const EdgeInsets.all(10) //content padding inside button
-                      ),
+                      const EdgeInsets.all(10) //content padding inside button
+                  ),
                 ),
               ),
             ),
