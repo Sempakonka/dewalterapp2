@@ -177,7 +177,7 @@ Future checkInTicket(String ticketCode, DateTime scannedAt,
       'update tickets set '
           'scanned_at = ?,'
           'scanned_by = ?,'
-          'status = 1'
+          'status = 1 '
           'where ticket_code = ?',
       [scannedAt, scannedBy, ticketCode]);
   await conn.close();

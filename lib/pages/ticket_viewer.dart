@@ -1,6 +1,5 @@
 import 'package:de_walter_app_2/globals.dart';
 import 'package:de_walter_app_2/providers/database_providers.dart';
-import 'package:de_walter_app_2/services/database_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -37,7 +36,7 @@ class TicketViewer extends ConsumerWidget {
               style: TextStyle(
                   fontSize: Theme.of(context).textTheme.headline2!.fontSize,
                   color: Colors.black54),
-              children:  <TextSpan>[
+              children: <TextSpan>[
                 TextSpan(text: 'Naam: '),
                 TextSpan(
                     text: args.name,
@@ -78,7 +77,7 @@ class TicketViewer extends ConsumerWidget {
               style: TextStyle(
                   fontSize: Theme.of(context).textTheme.headline2!.fontSize,
                   color: Colors.black54),
-              children:  <TextSpan>[
+              children: <TextSpan>[
                 TextSpan(text: 'Event: '),
                 TextSpan(
                     text: eventData.value!.name,
@@ -95,10 +94,11 @@ class TicketViewer extends ConsumerWidget {
               style: TextStyle(
                   fontSize: Theme.of(context).textTheme.headline2!.fontSize,
                   color: Colors.black54),
-              children:  <TextSpan>[
+              children: <TextSpan>[
                 const TextSpan(text: 'Datum: '),
                 TextSpan(
-                    text: DateFormat('yyyy-MM-dd').format(eventData.value!.startDate),
+                    text: DateFormat('yyyy-MM-dd')
+                        .format(eventData.value!.startDate),
                     style: const TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black87)),
               ],
@@ -119,10 +119,10 @@ class TicketViewer extends ConsumerWidget {
               style: TextStyle(
                   fontSize: Theme.of(context).textTheme.headline2!.fontSize,
                   color: Colors.black54),
-              children:  <TextSpan>[
+              children: <TextSpan>[
                 TextSpan(text: 'Scanned: '),
                 TextSpan(
-                    text: isScanned.value ? "Yes" : "No" ,
+                    text: isScanned.value ? "Yes" : "No",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black87)),
               ],
@@ -153,10 +153,10 @@ class TicketViewer extends ConsumerWidget {
               style: TextStyle(
                   fontSize: Theme.of(context).textTheme.headline2!.fontSize,
                   color: Colors.black54),
-              children:  <TextSpan>[
+              children: <TextSpan>[
                 TextSpan(text: 'Price: '),
                 TextSpan(
-                    text:"€ ${args.ticketPrice}",
+                    text: "€ ${args.ticketPrice}",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black87)),
               ],
@@ -170,7 +170,7 @@ class TicketViewer extends ConsumerWidget {
               style: TextStyle(
                   fontSize: Theme.of(context).textTheme.headline2!.fontSize,
                   color: Colors.black54),
-              children:  <TextSpan>[
+              children: <TextSpan>[
                 const TextSpan(text: 'Ticket created at: '),
                 TextSpan(
                     text: DateFormat('yyyy-MM-dd').format(args.createdAt),
@@ -184,31 +184,36 @@ class TicketViewer extends ConsumerWidget {
           padding: const EdgeInsets.fromLTRB(30, 30, 0, 0),
           child: Text(
             "To be payed",
-            style: Theme.of(context).textTheme.headline1,
+            style: TextStyle(
+                fontSize: Theme.of(context).textTheme.headline1!.fontSize,
+                color: args.status == 0 ? Colors.redAccent : green),
           ),
         ),
-
-
         Padding(
           padding: EdgeInsets.fromLTRB(30, 5, 30, 0),
           child: Container(
             height: 50,
             width: double.infinity,
-            child:  Center(
+            child: Center(
                 child: Text(
-                 "€ ${(args.ticketPrice - args.prePayment).toString()}",
-              style: TextStyle(fontSize:  Theme.of(context).textTheme.headline1!.fontSize,color: Colors.white),
+              args.status == 0
+                  ? "€ ${(args.ticketPrice - args.prePayment).toString()}"
+                  : "€ 0",
+              style: TextStyle(
+                  fontSize: Theme.of(context).textTheme.headline1!.fontSize,
+                  color: Colors.white),
             )),
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(8)), color: green),
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                color: args.status == 0 ? Colors.redAccent : green),
           ),
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
           child: ElevatedButton(
-              onPressed: () => ref.watch(navigationNotifierProvider).pop(
-                  context: context, args: SelectedEventSingleton().selectedEvent),
-              child: const Text("Terug naar overzicht"),
+            onPressed: () => ref.watch(navigationNotifierProvider).pop(
+                context: context, args: SelectedEventSingleton().selectedEvent),
+            child: const Text("Terug naar overzicht"),
             style: ElevatedButton.styleFrom(
                 primary: green,
                 //background color of button
@@ -216,9 +221,9 @@ class TicketViewer extends ConsumerWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
-                padding: const EdgeInsets.all(
-                    10) //content padding inside button
-            ),
+                padding:
+                    const EdgeInsets.all(10) //content padding inside button
+                ),
           ),
         )
       ],

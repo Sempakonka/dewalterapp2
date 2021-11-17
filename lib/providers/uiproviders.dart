@@ -19,7 +19,17 @@ class WorkSpaceProvider extends ChangeNotifier {
 
   int? get pageToGoOnEnd => _pageToGoOnEnd;
 
-  void setHeight(BuildContext context, {required int direction, int? pageToGoOnEnd}) async {
+  bool _workspaceIsInit = false;
+
+  bool get workSpaceIsInit => _workspaceIsInit;
+
+  void setWorkSpaceIsInt(bool value) {
+    _workspaceIsInit = value;
+    notifyListeners();
+  }
+
+  void setHeight(BuildContext context,
+      {required int direction, int? pageToGoOnEnd}) async {
     _pageToGoOnEnd = pageToGoOnEnd;
 
     _direction = direction;
@@ -56,5 +66,4 @@ class WorkSpaceProvider extends ChangeNotifier {
 }
 
 final formControllerProvider =
-StateProvider<TextEditingController>((ref) => TextEditingController());
-
+    StateProvider<TextEditingController>((ref) => TextEditingController());

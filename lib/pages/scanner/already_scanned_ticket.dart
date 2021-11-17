@@ -50,7 +50,7 @@ class AlreadyScanned extends ConsumerWidget {
                   child: Center(
                     child: Text(
                       scannedTicket!.name,
-                      style: TextStyle(color: green),
+                      style: TextStyle(color: Colors.orange,),
                     ),
                   ),
                   decoration: const BoxDecoration(
@@ -73,7 +73,7 @@ class AlreadyScanned extends ConsumerWidget {
                   child: Center(
                       child: Text(
                     scannedTicket.email,
-                    style: TextStyle(color: green),
+                    style: TextStyle(color: Colors.orange,),
                   )),
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -95,7 +95,7 @@ class AlreadyScanned extends ConsumerWidget {
                   child: Center(
                       child: Text(
                     scannedTicket.scannedBy.toString(),
-                    style: TextStyle(color: green),
+                    style: TextStyle(color: Colors.orange,),
                   )),
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -117,7 +117,7 @@ class AlreadyScanned extends ConsumerWidget {
                   child: Center(
                       child: Text(
                     scannedTicket.scannedAt.toString(),
-                    style: const TextStyle(color: green),
+                    style: const TextStyle(color: Colors.orange,),
                   )),
                   decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -133,14 +133,14 @@ class AlreadyScanned extends ConsumerWidget {
                         Text(
                           "Verder met scannen ",
                           style: TextStyle(
-                              color: Colors.green,
+                              color: Colors.orange,
                               fontSize: Theme.of(context)
                                   .textTheme
                                   .bodyText2!
                                   .fontSize),
                         ),
                         const Icon(Icons.arrow_forward_rounded,
-                            color: Colors.red),
+                            color: Colors.orange),
                       ],
                     ),
                     style: ElevatedButton.styleFrom(

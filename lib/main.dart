@@ -48,15 +48,20 @@ class AuthChecker extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Future.delayed(Duration.zero,
-        () =>   ref.read(workspaceNotifierProvider).setHeight(context, direction: 0)
-    );
+    if (!ref.read(workspaceNotifierProvider).workSpaceIsInit) {
+      Future.delayed(Duration.zero,
+              () =>
+              ref.read(workspaceNotifierProvider).setHeight(
+                  context, direction: 0)
+      );
+      ref.read(workspaceNotifierProvider).setWorkSpaceIsInt(true);
+    }
 
     final _authState = ref.watch(sessionNotifierProvider);
     if (_authState.user == null) {
       return const NavigationBarScreen();
     } else {
-      return const LoginAsScanner();
+      return const NavigationBarScreen();
     }
   }
 }
