@@ -9,10 +9,10 @@ import '../navigation.dart';
 
 class LoginAsScanner extends ConsumerWidget {
   const LoginAsScanner({Key? key}) : super(key: key);
-
+ static  final  _passwordFormKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _passwordFormKey = GlobalKey<FormState>();
+
     final _usernameController = TextEditingController();
     final _passwordController = TextEditingController();
 

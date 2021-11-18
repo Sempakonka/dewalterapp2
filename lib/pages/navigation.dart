@@ -185,7 +185,7 @@ class WorkSpace extends HookConsumerWidget {
       duration: duration,
       child: PageTransitionSwitcher(
         key: key,
-        duration: const Duration(milliseconds: 700),
+        duration: const Duration(milliseconds: 400),
         reverse: reverse,
         transitionBuilder: (
           Widget child,

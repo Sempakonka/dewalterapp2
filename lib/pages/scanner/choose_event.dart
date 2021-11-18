@@ -77,15 +77,14 @@ class ChooseEvent extends ConsumerWidget {
           ),
         );
       },
-      loading: (AsyncValue<List<Event>>? previous) {
+      loading: () {
         return const Padding(
           padding: EdgeInsets.all(168.0),
           child: CircularProgressIndicator(),
         );
       },
-      error: (Object error, StackTrace? stackTrace,
-          AsyncData<List<Event>>? previous) {
-        return Text('Error: $previous');
+      error: (_,__) {
+        return Text('Error: $_');
       },
     );
   }

@@ -122,7 +122,7 @@ class TicketViewer extends ConsumerWidget {
               children: <TextSpan>[
                 TextSpan(text: 'Scanned: '),
                 TextSpan(
-                    text: isScanned.value ? "Yes" : "No",
+                    text: isScanned.value ?? false ? "Yes" : "No",
                     style: TextStyle(
                         fontWeight: FontWeight.bold, color: Colors.black87)),
               ],
