@@ -12,7 +12,7 @@ class ChooseEvent extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var events = ref.watch(eventsProvider);
+    var events = ref.watch(allEventsProvider);
 
     return events.when(
       data: (var events) {

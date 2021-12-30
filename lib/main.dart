@@ -43,25 +43,26 @@ Future<void> main() async {
 
 class AuthChecker extends ConsumerWidget {
   const AuthChecker({Key? key}) : super(key: key);
-
-
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (!ref.read(workspaceNotifierProvider).workSpaceIsInit) {
+    /// After opening app the "Workplace" height needs to be set
+    /// So, we first check if the ""Workplace" height is set
+    /// If not then set the workspace height first
+    if (!ref.read(workspaceNotifierProvider).workplaceHeightIsSet) {
       Future.delayed(Duration.zero,
               () =>
               ref.read(workspaceNotifierProvider).setHeight(
                   context, direction: 0)
       );
-      ref.read(workspaceNotifierProvider).setWorkSpaceIsInt(true);
+      ref.read(workspaceNotifierProvider).setWorkPlaceHeightIsSet(true);
     }
 
+    /// Auth state check
     final _authState = ref.watch(sessionNotifierProvider);
     if (_authState.user == null) {
-      return const NavigationBarScreen();
+      return const App();
     } else {
-      return const NavigationBarScreen();
+      return const App();
     }
   }
 }

@@ -19,12 +19,12 @@ class WorkSpaceProvider extends ChangeNotifier {
 
   int? get pageToGoOnEnd => _pageToGoOnEnd;
 
-  bool _workspaceIsInit = false;
+  bool _workplaceHeightIsSet = false;
 
-  bool get workSpaceIsInit => _workspaceIsInit;
+  bool get workplaceHeightIsSet => _workplaceHeightIsSet;
 
-  void setWorkSpaceIsInt(bool value) {
-    _workspaceIsInit = value;
+  void setWorkPlaceHeightIsSet(bool value) {
+    _workplaceHeightIsSet = value;
     notifyListeners();
   }
 
