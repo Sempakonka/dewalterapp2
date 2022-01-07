@@ -1,14 +1,14 @@
 import 'dart:collection';
 
 import 'package:animations/animations.dart';
-import 'package:de_walter_app_2/globals.dart' ;
+import 'package:de_walter_app_2/globals.dart';
 import 'package:de_walter_app_2/pages/sales/history_of_tickets_made.dart';
 import 'package:de_walter_app_2/pages/sales/login_as_seller.dart';
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/scanner/people_scanned_of_event_page.dart';
 import 'package:de_walter_app_2/pages/scanner/scan_ticket_page.dart';
-import 'package:de_walter_app_2/pages/sign_in.dart';
+import 'package:de_walter_app_2/pages/choose_activity.dart';
 import 'package:de_walter_app_2/pages/ticket_viewer.dart';
 import 'package:de_walter_app_2/providers/auth_providers.dart';
 import 'package:de_walter_app_2/providers/database_providers.dart';
@@ -39,7 +39,6 @@ class BodySingleton {
 class NavigationNotifier extends ChangeNotifier {
   late final Reader read;
 
-
   int _currentIndex = 0;
 
   int get currentIndex => _currentIndex;
@@ -68,7 +67,7 @@ class NavigationNotifier extends ChangeNotifier {
     switch (i) {
       case 0:
         BodySingleton().body = const SignInPage();
-        read(workspaceNotifierProvider).setHeight(context, direction: 0);
+        read(workspaceNotifierProvider).setHeightInPercentage(55,  context: context);
         _currentIndex = 0;
         break;
       case 1:
@@ -79,8 +78,8 @@ class NavigationNotifier extends ChangeNotifier {
         BodySingleton().body = const ChooseEvent();
         break;
       case 3:
-        read(ticketsAtScannedByProvider)
-            .fetchTickets(read(sessionNotifierProvider).user!.id, args['eventId']);
+        read(ticketsAtScannedByProvider).fetchTickets(
+            read(sessionNotifierProvider).user!.id, args['eventId']);
 
         BodySingleton().body = PeopleScannedOfEvent(args: args);
         break;
@@ -106,7 +105,6 @@ class NavigationNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
-
 
 /// This class both the upper and lower "Workplace" half of the app
 class App extends ConsumerWidget {
@@ -142,6 +140,7 @@ class App extends ConsumerWidget {
                   child: Image(image: AssetImage('assets/logo.png')),
                 ),
               ),
+
               /// Lower half
               WorkPlace()
             ],
@@ -151,7 +150,6 @@ class App extends ConsumerWidget {
     );
   }
 }
-
 
 /// This class contains the lower half of the app
 class WorkPlace extends HookConsumerWidget {
@@ -165,7 +163,6 @@ class WorkPlace extends HookConsumerWidget {
     // ignore: unused_local_variable
     final pageModel = ref.watch(navigationNotifierProvider);
 
-
     /// The height of the workspace
     var _height = ref.watch(workspaceNotifierProvider).workSpaceHeight;
 
@@ -177,14 +174,20 @@ class WorkPlace extends HookConsumerWidget {
     SharedAxisTransitionType? _transitionType =
         SharedAxisTransitionType.horizontal;
 
-    final _pageToGoOnEnd =  ref.watch(workspaceNotifierProvider).pageToGoOnEnd;
+    final _pageToGoOnEnd = ref.watch(workspaceNotifierProvider).pageToGoOnEnd;
 
     return AnimatedContainer(
       curve: Curves.easeInOutCubic,
+
       /// If navigation action is coming from the root
-      onEnd: ref.watch(workspaceNotifierProvider).direction == 1 && _pageToGoOnEnd != null
-          ? () =>
-              ref.read(navigationNotifierProvider).selectPage(_pageToGoOnEnd, args: context)
+      onEnd: _pageToGoOnEnd != null
+          ? () {
+        print(_pageToGoOnEnd);
+              ref
+                  .read(navigationNotifierProvider)
+                  .selectPage(_pageToGoOnEnd, args: context);
+              ref.read(workspaceNotifierProvider).setPageToGoOnEnd(null);
+            }
           : null,
       height: _height,
       width: MediaQuery.of(context).size.width,
