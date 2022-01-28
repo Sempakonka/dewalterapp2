@@ -17,8 +17,8 @@ Future<void> main() async {
           fontFamily: 'Montserrat',
           textTheme: const TextTheme(
             headline1: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.bold,
+              fontSize: 22.0,
+              fontWeight: FontWeight.w700,
               color: darkBlue,
             ),
             headline2: TextStyle(
@@ -53,18 +53,6 @@ class AuthChecker extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    /// After opening app the "Workplace" height needs to be set
-    /// So, we first check if the ""Workplace" height is set (if app is already opened)
-    /// If not then set the workspace height first
-    if (!ref.read(workspaceNotifierProvider).workplaceHeightIsSet) {
-      Future.delayed(Duration.zero, () {
-        ref
-            .read(workspaceNotifierProvider)
-            .setHeightInPercentage(55, context: context);
-        ref.read(workspaceNotifierProvider).setWorkPlaceHeightIsSet(true);
-      });
-    }
-
     /// Auth state check
     final _authState = ref.watch(sessionNotifierProvider);
     if (_authState.user == null) {

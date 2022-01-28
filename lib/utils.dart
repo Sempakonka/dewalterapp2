@@ -30,3 +30,10 @@ double screenHeightExcludingToolbar(BuildContext context,
 
 bool passwordCheck({required String givenPassword, required String hash}) =>
     dbCrypt.DBCrypt().checkpw(givenPassword, hash);
+
+
+double getCorrectHeightFromPercentage(int percentage, BuildContext context){
+  return   (screenHeightExcludingToolbar(context) -
+      MediaQuery.of(context).padding.top) /
+      100 * percentage;
+}

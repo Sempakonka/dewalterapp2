@@ -14,6 +14,7 @@ import 'package:de_walter_app_2/pages/ticket_viewer.dart';
 import 'package:de_walter_app_2/providers/auth_providers.dart';
 import 'package:de_walter_app_2/providers/database_providers.dart';
 import 'package:de_walter_app_2/providers/uiproviders.dart';
+import 'package:de_walter_app_2/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -31,8 +32,8 @@ class BodySingleton {
 
   factory BodySingleton() => _instance;
 
-  /// The body initializes with the [SignInPage]
-  Widget body = const ChooseWorkspace();
+  /// The body initializes with the [ChooseActivity]
+  Widget? body  = ChooseWorkspace();
 
   BodySingleton._internal();
 }
@@ -50,7 +51,7 @@ class NavigationNotifier extends ChangeNotifier {
 
   NavigationNotifier(this.read);
 
-  ListQueue<int> _navigationHistory = ListQueue.from([0]);
+  ListQueue<int> _navigationHistory = ListQueue.from([8]);
 
   ListQueue<int> get navigationHistory => _navigationHistory;
 
@@ -67,8 +68,7 @@ class NavigationNotifier extends ChangeNotifier {
     isPopRequest = isPopRequest ?? false;
     switch (i) {
       case 0:
-        BodySingleton().body = const SignInPage();
-        read(workspaceNotifierProvider).setHeightInPercentage(55,  context: context);
+        BodySingleton().body = const ChooseActivity();
         _currentIndex = 0;
         break;
       case 1:
@@ -80,7 +80,7 @@ class NavigationNotifier extends ChangeNotifier {
         break;
       case 3:
         read(ticketsAtScannedByProvider).fetchTickets(
-            read(sessionNotifierProvider).user!.id, args['eventId']);
+            1, args['eventId']);
 
         BodySingleton().body = PeopleScannedOfEvent(args: args);
         break;
@@ -95,6 +95,9 @@ class NavigationNotifier extends ChangeNotifier {
         break;
       case 7:
         BodySingleton().body = TicketViewer(args: args);
+        break;
+      case 8:
+        BodySingleton().body = ChooseWorkspace();
         break;
     }
 
@@ -120,11 +123,12 @@ class App extends ConsumerWidget {
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: showBackButton
           ? FloatingActionButton(
+        elevation: 0,
               child: const Icon(Icons.arrow_back_outlined),
               onPressed: () => ref.watch(navigationNotifierProvider).pop(
                   context: context,
                   args: SelectedEventSingleton().selectedEvent),
-              backgroundColor: green,
+              backgroundColor: Colors.transparent,
             )
           : Container(),
       body: Container(
@@ -191,14 +195,12 @@ class WorkPlace extends HookConsumerWidget {
       /// If navigation action is coming from the root
       onEnd: _pageToGoOnEnd != null
           ? () {
-        print(_pageToGoOnEnd);
               ref
                   .read(navigationNotifierProvider)
                   .selectPage(_pageToGoOnEnd, args: context);
               ref.read(workspaceNotifierProvider).setPageToGoOnEnd(null);
             }
           : null,
-      height: _height,
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -225,7 +227,8 @@ class WorkPlace extends HookConsumerWidget {
             transitionType: _transitionType,
           );
         },
-        child: BodySingleton().body,
+
+            child: BodySingleton().body,
       ),
     );
   }
