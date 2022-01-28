@@ -18,7 +18,6 @@ class TicketViewer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isScanned = ref.watch(isScannedProvider(args.tickedCode));
     final eventData = ref.watch(eventAtIdProvider(args.eventId));
-    // TODO: implement build
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

@@ -4,22 +4,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future tryToLoginAsScanner(
-    String username, String password, WidgetRef ref) async {
+Future tryToLoginAsScanner({
+    required String email, required String password} ) async {
   final conn = await MySqlConnection.connect(ConnectionSettings(
-      host: '185.104.29.16',
+      host: 'localhost',
       port: 3306,
-      user: 'u9894p21510_app',
-      db: 'u9894p21510_app',
-      password: '4TjTcdnE'));
+      user: 'u9894p125778_app',
+      db: 'u9894p125778_app',
+      password: 'abiiI3k3'));
 
   var result =
-      await conn.query('select * from users where username = ?', [username]);
+      await conn.query('select * from users where email = ?', [email]);
   await conn.close();
   SharedPreferences preferences = await SharedPreferences.getInstance();
 
   for (var row in result) {
-    if (row[2] != null) {
+  /*  if (row[2] != null) {
       bool isCorrectPassword = db.DBCrypt().checkpw(password, row[2]);
 
       if (isCorrectPassword) {
@@ -40,20 +40,20 @@ Future tryToLoginAsScanner(
       }
     } else {
       return Future.error("Incorrect at is not null element");
-    }
+    }*/
   }
-  return Future.error("Incorrect");
+  return Future.error("Not implemented");
 }
 
 
 Future tryToLoginAsSeller(
     String username, String password, WidgetRef ref) async {
   final conn = await MySqlConnection.connect(ConnectionSettings(
-      host: '185.104.29.16',
+      host: 'localhost',
       port: 3306,
-      user: 'u9894p21510_app',
-      db: 'u9894p21510_app',
-      password: '4TjTcdnE'));
+      user: 'u9894p125778_app',
+      db: 'u9894p125778_app',
+      password: 'abiiI3k3'));
 
   var result =
   await conn.query('select * from users where username = ?', [username]);

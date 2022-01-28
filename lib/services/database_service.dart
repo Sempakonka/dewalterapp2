@@ -246,3 +246,73 @@ Future<Event?> getEventById(int eventId) async {
   }
   return null;
 }
+
+
+Future insertNewTicket(
+    int eventId,
+    int status,
+    String name,
+    String email,
+    String createdAt,
+    int createdBy,
+    String? scannedAt,
+    int? scannedBy,
+    String ticketCode) async {
+  final conn = await MySqlConnection.connect(ConnectionSettings(
+      host: '185.104.29.16',
+      port: 3306,
+      user: 'u9894p21510_app',
+      db: 'u9894p21510_app',
+      password: '4TjTcdnE'));
+  // Open a connection (testdb should already exist)
+
+  await conn.query(
+      'insert into tickets (event_id, status, name, email, created_at, created_by, ticket_code) values (?, ?, ?, ?, ? ,?, ?)',
+      [eventId, name, status, email, createdAt, createdBy, ticketCode]);
+  print("inserted ticket");
+  // Finally, close the connection
+  await conn.close();
+}
+
+
+Future getAvailableTicketsAtEventId(int eventId) async {
+  final conn = await MySqlConnection.connect(ConnectionSettings(
+      host: '185.104.29.16',
+      port: 3306,
+      user: 'u9894p21510_app',
+      db: 'u9894p21510_app',
+      password: '4TjTcdnE'));
+
+  var amountOfSoldTicketsQuery = await conn
+      .query('select count(*) from tickets where event_id = ?', [eventId]);
+  int amountOfSoldTickets = 0;
+  for (var row in amountOfSoldTicketsQuery) {
+    amountOfSoldTickets = row[0];
+  }
+
+  bool hasFound = false;
+  int sequence = 1;
+  int? result;
+  while (!hasFound) {
+    print("iteration");
+    var availableTicketsAtSequenceQuery = await conn.query(
+        'select count from event_price where event_id = ? and sequence = ?',
+        [eventId, sequence]);
+    for (var row in availableTicketsAtSequenceQuery) {
+      if ((row[0] - amountOfSoldTickets) > 0) {
+        hasFound = true;
+        print("${row[0]} $amountOfSoldTickets");
+        result = (row[0] - amountOfSoldTickets);
+      } else {
+        amountOfSoldTickets = amountOfSoldTickets - row[0] as int;
+        //TODO add error handling when row == null thus not finding anything
+        sequence++;
+        continue;
+      }
+    }
+  }
+  // Finally, close the connection
+  await conn.close();
+
+  return(result.toString());
+}

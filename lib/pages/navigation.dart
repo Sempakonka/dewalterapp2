@@ -1,14 +1,15 @@
 import 'dart:collection';
 
 import 'package:animations/animations.dart';
-import 'package:de_walter_app_2/globals.dart' ;
+import 'package:de_walter_app_2/globals.dart';
+import 'package:de_walter_app_2/pages/choose_workspace.dart';
 import 'package:de_walter_app_2/pages/sales/history_of_tickets_made.dart';
 import 'package:de_walter_app_2/pages/sales/login_as_seller.dart';
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/scanner/people_scanned_of_event_page.dart';
 import 'package:de_walter_app_2/pages/scanner/scan_ticket_page.dart';
-import 'package:de_walter_app_2/pages/sign_in.dart';
+import 'package:de_walter_app_2/pages/choose_activity.dart';
 import 'package:de_walter_app_2/pages/ticket_viewer.dart';
 import 'package:de_walter_app_2/providers/auth_providers.dart';
 import 'package:de_walter_app_2/providers/database_providers.dart';
@@ -23,18 +24,22 @@ enum NavigationBarEvent { NEWS, EVENTS }
 final navigationNotifierProvider =
     ChangeNotifierProvider((ref) => NavigationNotifier(ref.read));
 
-class Singleton {
-  static final Singleton _instance = Singleton._internal();
+/// This is a singleton containing a widget
+/// This widget contains the page that is displayed on screen in the "Workplace"
+class BodySingleton {
+  static final BodySingleton _instance = BodySingleton._internal();
 
-  factory Singleton() => _instance;
+  factory BodySingleton() => _instance;
 
-  Widget body = const SignInPage();
+  /// The body initializes with the [SignInPage]
+  Widget body = const ChooseWorkspace();
 
-  Singleton._internal();
+  BodySingleton._internal();
 }
 
 class NavigationNotifier extends ChangeNotifier {
   late final Reader read;
+
   int _currentIndex = 0;
 
   int get currentIndex => _currentIndex;
@@ -50,7 +55,7 @@ class NavigationNotifier extends ChangeNotifier {
   ListQueue<int> get navigationHistory => _navigationHistory;
 
   void pop({BuildContext? context, final args}) {
-    _reverse = true;
+    /// Remove the page index that was last added in order to get previous page
     _navigationHistory.removeLast();
     selectPage(_navigationHistory.last,
         args: args, context: context, isPopRequest: true, reverse: true);
@@ -62,36 +67,39 @@ class NavigationNotifier extends ChangeNotifier {
     isPopRequest = isPopRequest ?? false;
     switch (i) {
       case 0:
-        Singleton().body = const SignInPage();
-        read(workspaceNotifierProvider).setHeight(context, direction: 0);
+        BodySingleton().body = const SignInPage();
+        read(workspaceNotifierProvider).setHeightInPercentage(55,  context: context);
         _currentIndex = 0;
         break;
       case 1:
-        Singleton().body = const LoginAsScanner();
+        BodySingleton().body = const LoginAsScanner();
         _currentIndex = 1;
         break;
       case 2:
-        Singleton().body = const ChooseEvent();
+        BodySingleton().body = const ChooseEvent();
         break;
       case 3:
-        read(ticketsAtScannedByProvider)
-            .fetchTickets(read(sessionNotifierProvider).user!.id, args['eventId']);
+        read(ticketsAtScannedByProvider).fetchTickets(
+            read(sessionNotifierProvider).user!.id, args['eventId']);
 
-        Singleton().body = PeopleScannedOfEvent(args: args);
+        BodySingleton().body = PeopleScannedOfEvent(args: args);
         break;
       case 4:
-        Singleton().body = ScanTicketPage(args: args);
+        BodySingleton().body = ScanTicketPage(args: args);
         break;
       case 5:
-        Singleton().body = const LoginAsSeller();
+        BodySingleton().body = const LoginAsSeller();
         break;
       case 6:
-        Singleton().body = const HistoryOfTicketsMade();
+        BodySingleton().body = const HistoryOfTicketsMade();
         break;
       case 7:
-        Singleton().body = TicketViewer(args: args);
+        BodySingleton().body = TicketViewer(args: args);
         break;
     }
+
+    /// If user does not go back a page then page where he came from needs to be
+    /// added to navigation history to be able to go back if he wants to later
     if (!isPopRequest) {
       _navigationHistory.add(i);
     }
@@ -99,14 +107,9 @@ class NavigationNotifier extends ChangeNotifier {
   }
 }
 
-class PageModel {
-  const PageModel(this.page);
-
-  final NavigationBarEvent page;
-}
-
-class NavigationBarScreen extends ConsumerWidget {
-  const NavigationBarScreen({Key? key}) : super(key: key);
+/// This class both the upper and lower "Workplace" half of the app
+class App extends ConsumerWidget {
+  const App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -124,21 +127,32 @@ class NavigationBarScreen extends ConsumerWidget {
               backgroundColor: green,
             )
           : Container(),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.all(40.0),
-                  child: Image(image: AssetImage('assets/logo.png')),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/achtergrond.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                /// Upper half
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(40.0),
+                    child: Image(image: AssetImage('assets/logo.png')),
+                  ),
                 ),
-              ),
-              WorkSpace()
-            ],
+
+                /// Lower half
+                WorkPlace()
+              ],
+            ),
           ),
         ),
       ),
@@ -146,10 +160,11 @@ class NavigationBarScreen extends ConsumerWidget {
   }
 }
 
-class WorkSpace extends HookConsumerWidget {
+/// This class contains the lower half of the app
+class WorkPlace extends HookConsumerWidget {
   final Duration duration = const Duration(milliseconds: 600);
 
-  const WorkSpace({Key? key}) : super(key: key);
+  const WorkPlace({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -157,21 +172,31 @@ class WorkSpace extends HookConsumerWidget {
     // ignore: unused_local_variable
     final pageModel = ref.watch(navigationNotifierProvider);
 
+    /// The height of the workspace
     var _height = ref.watch(workspaceNotifierProvider).workSpaceHeight;
 
+    /// If the transition animation between pages needs to be in reverse
+    /// When going back a page it needs to be in reverse
     var reverse = ref.watch(navigationNotifierProvider).reverse;
 
+    /// Transition animation setup for the switch between pages.
     SharedAxisTransitionType? _transitionType =
         SharedAxisTransitionType.horizontal;
 
-    final _pageToGoOnEnd =  ref.watch(workspaceNotifierProvider).pageToGoOnEnd;
+    final _pageToGoOnEnd = ref.watch(workspaceNotifierProvider).pageToGoOnEnd;
 
     return AnimatedContainer(
       curve: Curves.easeInOutCubic,
-      /// If navigation action is cominng from the root
-      onEnd: ref.watch(workspaceNotifierProvider).direction == 1 && _pageToGoOnEnd != null
-          ? () =>
-              ref.read(navigationNotifierProvider).selectPage(_pageToGoOnEnd, args: context)
+
+      /// If navigation action is coming from the root
+      onEnd: _pageToGoOnEnd != null
+          ? () {
+        print(_pageToGoOnEnd);
+              ref
+                  .read(navigationNotifierProvider)
+                  .selectPage(_pageToGoOnEnd, args: context);
+              ref.read(workspaceNotifierProvider).setPageToGoOnEnd(null);
+            }
           : null,
       height: _height,
       width: MediaQuery.of(context).size.width,
@@ -200,7 +225,7 @@ class WorkSpace extends HookConsumerWidget {
             transitionType: _transitionType,
           );
         },
-        child: Singleton().body,
+        child: BodySingleton().body,
       ),
     );
   }

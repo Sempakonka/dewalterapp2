@@ -1,9 +1,7 @@
 import 'package:de_walter_app_2/globals.dart';
-import 'package:de_walter_app_2/pages/navigation.dart';
 import 'package:de_walter_app_2/providers/uiproviders.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -12,10 +10,8 @@ class SignInPage extends HookConsumerWidget {
 
   const SignInPage({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     return Container(
       height: 350,
       decoration: const BoxDecoration(
@@ -57,7 +53,8 @@ class SignInPage extends HookConsumerWidget {
                     child: ElevatedButton(
                       onPressed: () => ref
                           .read(workspaceNotifierProvider)
-                          .setHeight(context, direction: 1, pageToGoOnEnd: 1),
+                          .setHeightInPercentage(88,
+                              context: context, pageToGoOnEnd: 1),
                       child: Row(
                         children: [
                           Text(
@@ -84,8 +81,10 @@ class SignInPage extends HookConsumerWidget {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () =>
-                        ref.read(workspaceNotifierProvider).setHeight(context, direction: 1, pageToGoOnEnd: 5),
+                    onPressed: () => ref
+                        .read(workspaceNotifierProvider)
+                        .setHeightInPercentage(88,
+                        context: context, pageToGoOnEnd: 5),
                     child: Row(
                       children: [
                         Text(

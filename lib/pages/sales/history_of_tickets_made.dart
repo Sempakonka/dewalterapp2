@@ -61,7 +61,9 @@ class HistoryOfTicketsMade extends ConsumerWidget {
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.5,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
