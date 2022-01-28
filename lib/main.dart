@@ -1,3 +1,4 @@
+import 'package:de_walter_app_2/globals.dart';
 import 'package:de_walter_app_2/pages/navigation.dart';
 import 'package:de_walter_app_2/pages/scanner/already_scanned_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/incorrect_ticket.dart';
@@ -13,20 +14,27 @@ Future<void> main() async {
       child: MaterialApp(
         theme: ThemeData(
           scaffoldBackgroundColor: const Color.fromARGB(255, 16, 172, 132),
-          fontFamily: 'Poppins',
+          fontFamily: 'Montserrat',
           textTheme: const TextTheme(
             headline1: TextStyle(
-                fontSize: 26.0,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 16, 172, 132)),
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              color: darkBlue,
+            ),
             headline2: TextStyle(
                 fontSize: 17.0,
                 fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 16, 172, 132)),
+                color: darkBlue,),
+            bodyText1: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.w100,
+                color: lightTextBlue,),
             bodyText2: TextStyle(
-                fontSize: 14.0,
-                fontWeight: FontWeight.normal,
-                color: Color.fromARGB(255, 16, 172, 132)),
+              fontSize: 14.0,
+              fontWeight: FontWeight.w100,
+              color: lightTextBlue,)
+
+              ,
           ),
         ),
         routes: {
@@ -50,7 +58,9 @@ class AuthChecker extends ConsumerWidget {
     /// If not then set the workspace height first
     if (!ref.read(workspaceNotifierProvider).workplaceHeightIsSet) {
       Future.delayed(Duration.zero, () {
-        ref.read(workspaceNotifierProvider).setHeightInPercentage(55, context: context);
+        ref
+            .read(workspaceNotifierProvider)
+            .setHeightInPercentage(55, context: context);
         ref.read(workspaceNotifierProvider).setWorkPlaceHeightIsSet(true);
       });
     }

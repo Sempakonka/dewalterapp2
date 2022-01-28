@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:animations/animations.dart';
 import 'package:de_walter_app_2/globals.dart';
+import 'package:de_walter_app_2/pages/choose_workspace.dart';
 import 'package:de_walter_app_2/pages/sales/history_of_tickets_made.dart';
 import 'package:de_walter_app_2/pages/sales/login_as_seller.dart';
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
@@ -31,7 +32,7 @@ class BodySingleton {
   factory BodySingleton() => _instance;
 
   /// The body initializes with the [SignInPage]
-  Widget body = const SignInPage();
+  Widget body = const ChooseWorkspace();
 
   BodySingleton._internal();
 }
@@ -126,24 +127,32 @@ class App extends ConsumerWidget {
               backgroundColor: green,
             )
           : Container(),
-      body: SingleChildScrollView(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              /// Upper half
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.all(40.0),
-                  child: Image(image: AssetImage('assets/logo.png')),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/achtergrond.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: const [
+                /// Upper half
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(40.0),
+                    child: Image(image: AssetImage('assets/logo.png')),
+                  ),
                 ),
-              ),
 
-              /// Lower half
-              WorkPlace()
-            ],
+                /// Lower half
+                WorkPlace()
+              ],
+            ),
           ),
         ),
       ),

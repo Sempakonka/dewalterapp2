@@ -1,3 +1,4 @@
+import 'package:dbcrypt/dbcrypt.dart' as dbCrypt;
 import 'package:flutter/material.dart';
 
 String formatDate(String dbDate) {
@@ -24,6 +25,8 @@ double screenHeight(BuildContext context,
 
 double screenHeightExcludingToolbar(BuildContext context,
     {double dividedBy = 1}) {
-  return screenHeight(context,
-      dividedBy: dividedBy, reducedBy: kToolbarHeight);
+  return screenHeight(context, dividedBy: dividedBy, reducedBy: kToolbarHeight);
 }
+
+bool passwordCheck({required String givenPassword, required String hash}) =>
+    dbCrypt.DBCrypt().checkpw(givenPassword, hash);

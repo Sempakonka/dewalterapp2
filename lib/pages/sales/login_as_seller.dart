@@ -105,7 +105,7 @@ class LoginAsSeller extends ConsumerWidget {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: ElevatedButton(
-                  onPressed: () async {
+                  onPressed: () async {/*
                     if (_passwordFormKey.currentState!.validate()) {
                       await _auth
                           .tryToLoginAsSeller(_usernameController.text,
@@ -121,7 +121,7 @@ class LoginAsSeller extends ConsumerWidget {
                           },
                         );
                       });
-                    }
+                    }*/
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
