@@ -30,7 +30,7 @@ class ChooseActivity extends HookConsumerWidget {
               child: Row(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    padding: EdgeInsets.fromLTRB(20, 0, 10, 0),
                     child: Icon(Icons.email),
                   ),
                   Text("Square", style: Theme.of(context).textTheme.headline2)

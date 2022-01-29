@@ -35,6 +35,24 @@ class ChooseWorkspace extends ConsumerWidget {
                       style: Theme.of(context).textTheme.bodyText1),
                 ),
               ),
+              Container(
+                decoration: const BoxDecoration(
+                  // color: const Color(0xFFF1F0FA),
+                  // border: Border.all(color: const Color(0xFF6C5CE7), width: 1)
+                ),
+                child: Row(
+                  children: const [
+                    Expanded(child: Icon(Icons.business_center)),
+                    Expanded(
+                      child: TextField(
+                        // ...
+                      ),
+                    ),
+                    Expanded(child: Text(".tickvent.com"))
+                  ],
+                ),
+              )
+
             ],
           ),
           Column(

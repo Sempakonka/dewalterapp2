@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-const green = Color.fromARGB(255, 16, 172, 132);
+const green = Color.fromARGB(255, 0, 206, 132);
 const darkBlue = Color.fromARGB(255, 27, 20, 100);
 const lightTextBlue = Color.fromARGB(255, 128, 123, 174);
 const inputFieldBackgroundColor = Color.fromARGB(255, 241, 240, 250);

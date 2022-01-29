@@ -66,44 +66,7 @@ class PeopleScannedOfEvent extends ConsumerWidget {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
-              child: Container(
-                height: 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      child: Icon(
-                        Icons.email,
-                        size: 50,
-                      ),
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: Column(
-
-                        children: [
-                          SizedBox(
-                            ///TODO: The width is hardcoded. This should not be hardcoded
-                            width: 200,
-                            child: Text(
-                              args["name"],
-                              style: Theme.of(context).textTheme.headline1,
-                              textAlign: TextAlign.left,
-                            ),
-                          ),
-                          Text(args["date"],
-                              style: Theme.of(context).textTheme.bodyText2)
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                decoration: BoxDecoration(
-                    color: inputFieldBackgroundColor,
-                    borderRadius: BorderRadius.circular(borderRadiusTheme),
-                    border: Border.all(color: inputFieldBackgroundColorBorder)),
-              ),
+              child: ticketItem(context),
             ),
             Expanded(
               child: Scrollbar(
@@ -177,33 +140,73 @@ class PeopleScannedOfEvent extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(30, 40, 30, 0),
-              child: SizedBox(
-                child: ElevatedButton(
-                  onPressed: () async => ref
-                      .read(navigationNotifierProvider)
-                      .selectPage(4, args: args),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Tickets Scannen",
-                        style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .fontSize),
+              padding: const EdgeInsets.fromLTRB(30, 40, 30, 18),
+              child: ElevatedButton(
+                onPressed: () async => ref
+                    .read(navigationNotifierProvider)
+                    .selectPage(4, args: args),
+                child:
+                    Center(
+                      child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                        child: Text(
+                          "Tickets Scannen",
+                          style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2!
+                                  .fontSize),
+                        ),
                       ),
-                      const Icon(Icons.arrow_forward_rounded)
-                    ],
-                  ),
-                  style: darkButton
-                ),
+                    ),
+
+                style: darkButton
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget ticketItem(BuildContext context){
+    return Container(
+      height: 60,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const Padding(
+            padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+            child: Icon(
+              Icons.email,
+              size: 50,
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Column(
+
+              children: [
+                SizedBox(
+                  ///TODO: The width is hardcoded. This should not be hardcoded
+                  width: 200,
+                  child: Text(
+                    args["name"],
+                    style: Theme.of(context).textTheme.headline1,
+                    textAlign: TextAlign.left,
+                  ),
+                ),
+                Text(args["date"],
+                    style: Theme.of(context).textTheme.bodyText2)
+              ],
+            ),
+          ),
+        ],
+      ),
+      decoration: BoxDecoration(
+          color: inputFieldBackgroundColor,
+          borderRadius: BorderRadius.circular(borderRadiusTheme),
+          border: Border.all(color: inputFieldBackgroundColorBorder)),
     );
   }
 }
