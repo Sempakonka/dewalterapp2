@@ -110,6 +110,38 @@ class ChooseWorkspace extends ConsumerWidget {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
                       child: Text(
+                        "Valid",
+                        style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                ?.fontSize,
+                            fontWeight: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                ?.fontWeight,
+                            fontFamily: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                ?.fontFamily,
+                            color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  style: darkButton,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    ref.read(navigationNotifierProvider).selectPage(0);
+                  },
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                      child: Text(
                         "Continue",
                         style: TextStyle(
                             fontSize: Theme.of(context)
@@ -132,6 +164,70 @@ class ChooseWorkspace extends ConsumerWidget {
                   style: darkButton,
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    ref.read(navigationNotifierProvider).selectPage(0);
+                  },
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                      child: Text(
+                        "Red",
+                        style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                ?.fontSize,
+                            fontWeight: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                ?.fontWeight,
+                            fontFamily: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                ?.fontFamily,
+                            color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  style: darkButton,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
+                child: ElevatedButton(
+                  onPressed: () {
+                    ref.read(navigationNotifierProvider).selectPage(0);
+                  },
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                      child: Text(
+                        "Yellow",
+                        style: TextStyle(
+                            fontSize: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                ?.fontSize,
+                            fontWeight: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                ?.fontWeight,
+                            fontFamily: Theme.of(context)
+                                .textTheme
+                                .bodyText2
+                                ?.fontFamily,
+                            color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                  style: darkButton,
+                ),
+              )
             ],
           )
         ],

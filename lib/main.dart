@@ -13,7 +13,7 @@ Future<void> main() async {
     ProviderScope(
       child: MaterialApp(
         theme: ThemeData(
-          scaffoldBackgroundColor: const Color.fromARGB(255, 16, 172, 132),
+          scaffoldBackgroundColor: darkBlue,
           fontFamily: 'Montserrat',
           textTheme: const TextTheme(
             headline1: TextStyle(
@@ -33,8 +33,6 @@ Future<void> main() async {
               fontSize: 14.0,
               fontWeight: FontWeight.w100,
               color: lightTextBlue,)
-
-              ,
           ),
         ),
         routes: {

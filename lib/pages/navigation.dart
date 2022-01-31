@@ -122,17 +122,20 @@ class App extends ConsumerWidget {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: showBackButton
-          ? FloatingActionButton(
+          ? Padding(
+        padding: const EdgeInsets.fromLTRB(0,40,0,0),
+            child: FloatingActionButton(
         elevation: 0,
-              child: const Icon(Icons.arrow_back_outlined),
-              onPressed: () => ref.watch(navigationNotifierProvider).pop(
-                  context: context,
-                  args: SelectedEventSingleton().selectedEvent),
-              backgroundColor: Colors.transparent,
-            )
+                child: const Icon(Icons.arrow_back_outlined, size: 40,),
+                onPressed: () => ref.watch(navigationNotifierProvider).pop(
+                    context: context,
+                    args: SelectedEventSingleton().selectedEvent),
+                backgroundColor: Colors.transparent,
+              ),
+          )
           : Container(),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/achtergrond.png"),
             fit: BoxFit.cover,
@@ -148,7 +151,7 @@ class App extends ConsumerWidget {
                 /// Upper half
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(40.0),
+                    padding: EdgeInsets.fromLTRB(50.0,60,50,40),
                     child: Image(image: AssetImage('assets/logo.png')),
                   ),
                 ),

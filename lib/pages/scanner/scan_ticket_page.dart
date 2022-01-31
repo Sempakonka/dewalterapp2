@@ -6,7 +6,6 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../../globals.dart';
 import '../../utils.dart';
-import '../navigation.dart';
 
 class ScanTicketPage extends ConsumerWidget {
   const ScanTicketPage({Key? key, required this.args}) : super(key: key);
@@ -17,11 +16,10 @@ class ScanTicketPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-        maxHeight: getCorrectHeightFromPercentage(80, context)),
-
+          maxHeight: getCorrectHeightFromPercentage(80, context)),
       child: Stack(
         children: [
-        /* Text("voor ${args["name"]}",
+          /* Text("voor ${args["name"]}",
               style: TextStyle(
                   fontSize: Theme.of(context).textTheme.headline1!.fontSize,
                   color: Colors.black87,
@@ -31,24 +29,34 @@ class ScanTicketPage extends ConsumerWidget {
                   fontSize: Theme.of(context).textTheme.bodyText2!.fontSize,
                   color: Colors.black38,
                   fontWeight: Theme.of(context).textTheme.bodyText2!.fontWeight)),*/
-          QRView(
-            overlay: QrScannerOverlayShape(
-                borderLength: 30, borderColor: Colors.white),
-            key: GlobalKey(debugLabel: 'QR'),
-            onQRViewCreated: (controller) => {
-              controller.scannedDataStream.listen((scanData) {
-                handleScannedCode(
-                    scanData.code, controller, context, args["eventId"]);
-              })
-            },
+          ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(35.0),
+              topRight: Radius.circular(35.0),
+            ),
+            child: SizedBox(
+              height: getCorrectHeightFromPercentage(100, context),
+              child: QRView(
+                overlay: QrScannerOverlayShape(
+                    borderRadius: 40,
+                    borderLength: 30,
+                    borderColor: Colors.white),
+                key: GlobalKey(debugLabel: 'QR'),
+                onQRViewCreated: (controller) => {
+                  controller.scannedDataStream.listen((scanData) {
+                    handleScannedCode(
+                        scanData.code, controller, context, args["eventId"]);
+                  })
+                },
+              ),
+            ),
           ),
           Positioned.fill(
-              
-
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: eventIdentifier(context, args),
-              ))
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: eventIdentifier(context, args),
+            ),
+          ),
         ],
       ),
     );
@@ -56,17 +64,14 @@ class ScanTicketPage extends ConsumerWidget {
 
   eventIdentifier(BuildContext context, final args) {
     return Container(
-
       decoration: const BoxDecoration(
         color: Colors.white,
-           borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(18),
-        topRight: Radius.circular(18)),
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(35), topRight: Radius.circular(35)),
       ),
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(18.0,28,18,18),
+        padding: const EdgeInsets.fromLTRB(18.0, 28, 18, 18),
         child: Container(
-          height: 60,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -77,24 +82,29 @@ class ScanTicketPage extends ConsumerWidget {
                   size: 50,
                 ),
               ),
-              Align(
-                alignment: Alignment.center,
-                child: Column(
-
-                  children: [
-                    SizedBox(
-                      ///TODO: The width is hardcoded. This should not be hardcoded
-                      width: 200,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
                         args["name"],
                         style: Theme.of(context).textTheme.headline1,
-                        textAlign: TextAlign.left,
                       ),
                     ),
-                    Text(args["date"],
-                        style: Theme.of(context).textTheme.bodyText2)
-                  ],
-                ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(args["date"],
+                          style: Theme.of(context).textTheme.bodyText2),
+                    ),
+                  )
+                ],
               ),
             ],
           ),
