@@ -52,7 +52,6 @@ class ChooseWorkspace extends ConsumerWidget {
                   ],
                 ),
               )
-
             ],
           ),
           Column(
@@ -110,7 +109,7 @@ class ChooseWorkspace extends ConsumerWidget {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
                       child: Text(
-                        "Valid",
+                        "Continue",
                         style: TextStyle(
                             fontSize: Theme.of(context)
                                 .textTheme
@@ -136,13 +135,13 @@ class ChooseWorkspace extends ConsumerWidget {
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
                 child: ElevatedButton(
                   onPressed: () {
-                    ref.read(navigationNotifierProvider).selectPage(0);
+                    ref.read(navigationNotifierProvider).selectPage(9);
                   },
                   child: Center(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
                       child: Text(
-                        "Continue",
+                        "Valid",
                         style: TextStyle(
                             fontSize: Theme.of(context)
                                 .textTheme

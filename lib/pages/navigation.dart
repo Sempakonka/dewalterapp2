@@ -10,6 +10,7 @@ import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/scanner/people_scanned_of_event_page.dart';
 import 'package:de_walter_app_2/pages/scanner/scan_ticket_page.dart';
 import 'package:de_walter_app_2/pages/choose_activity.dart';
+import 'package:de_walter_app_2/pages/scanner/valid_ticked.dart';
 import 'package:de_walter_app_2/pages/ticket_viewer.dart';
 import 'package:de_walter_app_2/providers/auth_providers.dart';
 import 'package:de_walter_app_2/providers/database_providers.dart';
@@ -98,6 +99,9 @@ class NavigationNotifier extends ChangeNotifier {
         break;
       case 8:
         BodySingleton().body = ChooseWorkspace();
+        break;
+      case 9:
+        BodySingleton().body = const ValidTicket();
         break;
     }
 

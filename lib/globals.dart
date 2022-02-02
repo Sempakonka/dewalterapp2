@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 const green = Color.fromARGB(255, 0, 206, 132);
+const greenTransparent = Color.fromARGB(25, 255, 255, 255);
 const darkBlue = Color.fromARGB(255, 27, 20, 100);
 const lightTextBlue = Color.fromARGB(255, 128, 123, 174);
 const inputFieldBackgroundColor = Color.fromARGB(255, 241, 240, 250);
@@ -22,6 +23,16 @@ final darkButton = ElevatedButton.styleFrom(
 
 final lightButton = ElevatedButton.styleFrom(
     primary: const Color.fromARGB(255, 108, 92, 231),
+    //background color of button
+    //elevation of button
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(borderRadiusTheme)),
+    padding: const EdgeInsets.all(
+        10) //content padding inside button
+);
+
+final whiteButton = ElevatedButton.styleFrom(
+    primary: Colors.white,
     //background color of button
     //elevation of button
     shape: RoundedRectangleBorder(
