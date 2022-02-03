@@ -4,157 +4,161 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../globals.dart';
+import '../../utils.dart';
 
 class AlreadyScanned extends ConsumerWidget {
   const AlreadyScanned({Key? key}) : super(key: key);
 
   static const routeName = '/alreadyScannedTicket';
 
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ticketResultArgs = ModalRoute.of(context)!.settings.arguments as TicketResultArgs;
-    final scannedTicket = ticketResultArgs.ticket;
-    final controller = ticketResultArgs.controller;
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: Colors.orange,
-        body: Center(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+          maxHeight: getCorrectHeightFromPercentage(80, context)),
+      child: Container(
+        decoration: const BoxDecoration(color: yellow,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(35),
+            topRight: Radius.circular(35),
+          ),),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(25, 40, 30, 25),
+          child: Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Icon(
-                  Icons.flag,
-                  size: 170,
-                  color: Colors.white,
-                ),
-                const Text(
-                  "Ticket already scanned",
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                  textAlign: TextAlign.center,
-                ),
                 const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        "Naam",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.start,
-                      )),
-                ),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  child: Center(
-                    child: Text(
-                      scannedTicket!.name,
-                      style: TextStyle(color: Colors.orange,),
-                    ),
+                  padding: EdgeInsets.fromLTRB(0,0,0,20),
+                  child: Text(
+                    "Already scanned QR Code",
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    textAlign: TextAlign.start,
                   ),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Colors.white),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 18, 0, 5),
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        "E-mail",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.start,
-                      )),
                 ),
                 Container(
-                  height: 50,
-                  width: double.infinity,
-                  child: Center(
-                      child: Text(
-                    scannedTicket.email,
-                    style: TextStyle(color: Colors.orange,),
-                  )),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Colors.white),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 18, 0, 5),
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        "Scanned By",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.start,
-                      )),
-                ),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  child: Center(
-                      child: Text(
-                    scannedTicket.scannedBy.toString(),
-                    style: TextStyle(color: Colors.orange,),
-                  )),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Colors.white),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 18, 0, 5),
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        "Date scanned",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.start,
-                      )),
-                ),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  child: Center(
-                      child: Text(
-                    scannedTicket.scannedAt.toString(),
-                    style: const TextStyle(color: Colors.orange,),
-                  )),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Colors.white),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(50, 35, 50, 35),
-                  child: ElevatedButton(
-                    onPressed: () { Navigator.pop(context); controller.resumeCamera();},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Verder met scannen ",
-                          style: TextStyle(
-                              color: Colors.orange,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .fontSize),
-                        ),
-                        const Icon(Icons.arrow_forward_rounded,
-                            color: Colors.orange),
-                      ],
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        //background color of button
-                        //elevation of button
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(35.0),
-                        ),
-                        padding: const EdgeInsets.all(
-                            10) //content padding inside button
-                        ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(14, 16, 0, 8),
+                            child: Text(
+                              "Scanned at",
+                              style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontSize,
+                                  fontFamily: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontFamily,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(14, 8, 0, 16),
+                            child: Text(
+                              "Scanned by",
+                              style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontSize,
+                                  fontFamily: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontFamily,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 16, 14, 8),
+                            child: Text("24-11-2000",
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontSize,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontFamily,
+                                    color: Colors.white)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 8, 14, 16),
+                            child: Text("Sempakonka@gmail.com",
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontSize,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontFamily,
+                                    color: Colors.white)),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                )
+                  decoration: BoxDecoration(
+                    color: yellowTransparant,
+                    borderRadius: BorderRadius.circular(borderRadiusTheme),
+                    border: Border.all(color: inputFieldBackgroundColorBorder),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(50, 50, 50, 20),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                              child: Text(
+                                "Accept",
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontSize,
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontWeight,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontFamily,
+                                    color: yellow),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          style: whiteButton,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

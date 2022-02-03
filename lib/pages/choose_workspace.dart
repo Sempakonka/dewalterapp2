@@ -199,7 +199,7 @@ class ChooseWorkspace extends ConsumerWidget {
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
                 child: ElevatedButton(
                   onPressed: () {
-                    ref.read(navigationNotifierProvider).selectPage(0);
+                    ref.read(navigationNotifierProvider).selectPage(11);
                   },
                   child: Center(
                     child: Padding(

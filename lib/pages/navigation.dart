@@ -5,6 +5,7 @@ import 'package:de_walter_app_2/globals.dart';
 import 'package:de_walter_app_2/pages/choose_workspace.dart';
 import 'package:de_walter_app_2/pages/sales/history_of_tickets_made.dart';
 import 'package:de_walter_app_2/pages/sales/login_as_seller.dart';
+import 'package:de_walter_app_2/pages/scanner/already_scanned_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
 import 'package:de_walter_app_2/pages/scanner/incorrect_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
@@ -93,7 +94,7 @@ class NavigationNotifier extends ChangeNotifier {
         BodySingleton().body = const LoginAsSeller();
         break;
       case 6:
-        BodySingleton().body = const HistoryOfTicketsMade();
+        BodySingleton().body = HistoryOfTicketsMade(args: args);
         break;
       case 7:
         BodySingleton().body = TicketViewer(args: args);
@@ -106,6 +107,9 @@ class NavigationNotifier extends ChangeNotifier {
         break;
       case 10:
         BodySingleton().body = const IncorrectTicket();
+        break;
+      case 11:
+        BodySingleton().body = const AlreadyScanned();
         break;
     }
 
