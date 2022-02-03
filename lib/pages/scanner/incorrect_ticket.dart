@@ -1,7 +1,9 @@
-import 'package:de_walter_app_2/services/qr_scanner_services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../globals.dart';
+import '../../utils.dart';
 
 class IncorrectTicket extends ConsumerWidget {
   static const routeName = '/incorrectTicket';
@@ -10,58 +12,88 @@ class IncorrectTicket extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ticketResultArgs = ModalRoute.of(context)!.settings.arguments as TicketResultArgs;
-    final controller = ticketResultArgs.controller;
-    return Material(
-      child: Scaffold(
-        backgroundColor: Colors.redAccent,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.clear_rounded,
-                size: 170,
-                color: Colors.white,
-              ),
-              const Text(
-                "Ongeldige QR code",
-                style: TextStyle(color: Colors.white,fontSize: 25),
-                textAlign: TextAlign.center,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(50, 10, 50, 35),
-                child: ElevatedButton(
-                 onPressed: () { Navigator.pop(context); controller.resumeCamera();},
-                  child: Row(
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+          maxHeight: getCorrectHeightFromPercentage(80, context)),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: red,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(35),
+            topRight: Radius.circular(35),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(25, 40, 30, 25),
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Opnieuw scannen",
-                        style: TextStyle(
-                            color: Colors.redAccent,
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .bodyText2!
-                                .fontSize),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
+                        child: Text(
+                          "Invalid QR Code",
+                          style: TextStyle(color: Colors.white, fontSize: 25),
+                          textAlign: TextAlign.start,
+                        ),
                       ),
-                      const Icon(Icons.arrow_forward_outlined,
-                          color: Colors.red),
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
+                          child: SizedBox(
+                            width: 74,
+                            height: 74,
+                            child: Image.asset('assets/QrImage.png'),
+                          ),
+                        ),
+                        decoration: BoxDecoration(
+                          color: greenTransparent,
+                          borderRadius: BorderRadius.circular(borderRadiusTheme),
+                          border: Border.all(color: inputFieldBackgroundColorBorder),
+                        ),
+                      ),
                     ],
                   ),
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      //background color of button
-                      //elevation of button
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(50, 50, 50, 20),
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                        child: Text(
+                          "Accept",
+                          style: TextStyle(
+                              fontSize: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.fontSize,
+                              fontWeight: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.fontWeight,
+                              fontFamily: Theme.of(context)
+                                  .textTheme
+                                  .bodyText2
+                                  ?.fontFamily,
+                              color: red),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
-                      padding: const EdgeInsets.all(
-                          10) //content padding inside button
+                    ),
+                    style: whiteButton,
                   ),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
         ),
       ),

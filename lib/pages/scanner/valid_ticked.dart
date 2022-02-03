@@ -15,7 +15,11 @@ class ValidTicket extends ConsumerWidget {
       constraints: BoxConstraints(
           maxHeight: getCorrectHeightFromPercentage(80, context)),
       child: Container(
-        decoration: BoxDecoration(color: green),
+        decoration: const BoxDecoration(color: green,
+            borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(35),
+        topRight: Radius.circular(35),
+      ),),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(25, 40, 30, 25),
           child: Container(

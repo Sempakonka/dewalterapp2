@@ -8,6 +8,8 @@ const lightTextBlue = Color.fromARGB(255, 128, 123, 174);
 const inputFieldBackgroundColor = Color.fromARGB(255, 241, 240, 250);
 const lightPurple = Color.fromARGB(255, 108, 92, 231);
 const inputFieldBackgroundColorBorder = Color.fromARGB(255, 231, 229, 244);
+const red = Color.fromARGB(255, 237,59, 59);
+const redTransparent = Color.fromARGB(25, 237,59, 59);
 const borderRadiusTheme = 12.0;
 
 
