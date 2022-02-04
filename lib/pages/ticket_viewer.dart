@@ -27,62 +27,67 @@ class TicketViewer extends ConsumerWidget {
           eventIdentifier(context, eventData),
           informationContainer(context, args),
           Expanded(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30, 40, 30, 0),
-                child: ElevatedButton(
-                    onPressed: () => ref.watch(navigationNotifierProvider).pop(
-                        context: context,
-                        args: SelectedEventSingleton().selectedEvent),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
-                        child: Text(
-                          "FULLY PAID",
-                          style: TextStyle(
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .fontSize),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 40, 30, 0),
+                  child: ElevatedButton(
+                      onPressed: () => ref
+                          .watch(navigationNotifierProvider)
+                          .pop(
+                              context: context,
+                              args: SelectedEventSingleton().selectedEvent),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                          child: Text(
+                            "FULLY PAID",
+                            style: TextStyle(
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .fontSize),
+                          ),
                         ),
                       ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        primary: green,
-                        //background color of button
-                        //elevation of button
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.circular(borderRadiusTheme)),
-                        padding: const EdgeInsets.all(
-                            10) //content padding inside button
-                        )),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(30, 20, 30, 18),
-                child: ElevatedButton(
-                    onPressed: () => ref.watch(navigationNotifierProvider).pop(
-                        context: context,
-                        args: SelectedEventSingleton().selectedEvent),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
-                        child: Text(
-                          "Go Back",
-                          style: TextStyle(
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .fontSize),
+                      style: ElevatedButton.styleFrom(
+                          primary: green,
+                          //background color of button
+                          //elevation of button
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.circular(borderRadiusTheme)),
+                          padding: const EdgeInsets.all(
+                              10) //content padding inside button
+                          )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 20, 30, 18),
+                  child: ElevatedButton(
+                      onPressed: () => ref
+                          .watch(navigationNotifierProvider)
+                          .pop(
+                              context: context,
+                              args: SelectedEventSingleton().selectedEvent),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                          child: Text(
+                            "Go Back",
+                            style: TextStyle(
+                                fontSize: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2!
+                                    .fontSize),
+                          ),
                         ),
                       ),
-                    ),
-                    style: darkButton),
-              ),
-            ],
-          ))
+                      style: darkButton),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -92,105 +97,99 @@ class TicketViewer extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.fromLTRB(30.0, 0, 30, 0),
       child: Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 16, 0, 8),
-                    child: Text(
-                      "Name",
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 16, 0, 8),
+                  child: Text(
+                    "Name",
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 8, 0, 8),
-                    child: Text(
-                      "Email Address",
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 8, 0, 8),
+                  child: Text(
+                    "Email Address",
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 8, 0, 8),
-                    child: Text(
-                      "Phone Number",
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 8, 0, 8),
+                  child: Text(
+                    "Phone Number",
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(14, 8, 0, 16),
-                    child: Text(
-                      "Scanned At",
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(14, 8, 0, 16),
+                  child: Text(
+                    "Scanned At",
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 16, 14, 8),
-                    child: Text(args.name,
-                        style: TextStyle(
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText2?.fontSize,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                ?.fontFamily,
-                            color: darkBlue)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 14, 8),
-                    child: Text(args.email,
-                        style: TextStyle(
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText2?.fontSize,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                ?.fontFamily,
-                            color: darkBlue)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 14, 8),
-                    child: Text("06 403 260 27",
-                        style: TextStyle(
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText2?.fontSize,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                ?.fontFamily,
-                            color: darkBlue)),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 14, 16),
-                    child: Text("24 - 11 - 2000",
-                        style: TextStyle(
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText2?.fontSize,
-                            fontWeight: FontWeight.w800,
-                            fontFamily: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                ?.fontFamily,
-                            color: darkBlue)),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          decoration: BoxDecoration(
-              color: inputFieldBackgroundColor,
-              borderRadius: BorderRadius.circular(borderRadiusTheme),
-              border: Border.all(color: inputFieldBackgroundColorBorder))),
+                ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 16, 14, 8),
+                  child: Text(args.name,
+                      style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.bodyText2?.fontSize,
+                          fontWeight: FontWeight.w800,
+                          fontFamily:
+                              Theme.of(context).textTheme.bodyText2?.fontFamily,
+                          color: darkBlue)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8, 14, 8),
+                  child: Text(args.email,
+                      style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.bodyText2?.fontSize,
+                          fontWeight: FontWeight.w800,
+                          fontFamily:
+                              Theme.of(context).textTheme.bodyText2?.fontFamily,
+                          color: darkBlue)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8, 14, 8),
+                  child: Text("06 403 260 27",
+                      style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.bodyText2?.fontSize,
+                          fontWeight: FontWeight.w800,
+                          fontFamily:
+                              Theme.of(context).textTheme.bodyText2?.fontFamily,
+                          color: darkBlue)),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8, 14, 16),
+                  child: Text("24 - 11 - 2000",
+                      style: TextStyle(
+                          fontSize:
+                              Theme.of(context).textTheme.bodyText2?.fontSize,
+                          fontWeight: FontWeight.w800,
+                          fontFamily:
+                              Theme.of(context).textTheme.bodyText2?.fontFamily,
+                          color: darkBlue)),
+                ),
+              ],
+            ),
+          ],
+        ),
+        decoration: BoxDecoration(
+          color: inputFieldBackgroundColor,
+          borderRadius: BorderRadius.circular(borderRadiusTheme),
+          border: Border.all(color: inputFieldBackgroundColorBorder),
+        ),
+      ),
     );
   }
 
@@ -239,7 +238,7 @@ class TicketViewer extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0,0,18,0),
+              padding: const EdgeInsets.fromLTRB(0, 0, 18, 0),
               child: SizedBox(
                 width: 34,
                 height: 34,

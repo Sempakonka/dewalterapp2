@@ -45,6 +45,16 @@ final whiteButton = ElevatedButton.styleFrom(
         10) //content padding inside button
 );
 
+final greenButton = ElevatedButton.styleFrom(
+    primary: const Color.fromARGB(255, 0, 206, 132),
+    //background color of button
+    //elevation of button
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(borderRadiusTheme)),
+    padding: const EdgeInsets.all(
+        10) //content padding inside button
+);
+
 
 class SelectedEventSingleton {
   static final SelectedEventSingleton _instance = SelectedEventSingleton._internal();

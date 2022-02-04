@@ -99,7 +99,7 @@ class HistoryOfTicketsMade extends ConsumerWidget {
                               child: ListTile(
                                 onTap: () => ref
                                     .read(navigationNotifierProvider)
-                                    .selectPage(7, args: events[index]),
+                                    .selectPage(13, args: events[index]),
                                 title: Text(
                                   events[index].name,
                                   style: TextStyle(
@@ -140,13 +140,13 @@ class HistoryOfTicketsMade extends ConsumerWidget {
               child: ElevatedButton(
                   onPressed: () async => ref
                       .read(navigationNotifierProvider)
-                      .selectPage(4, args: args),
+                      .selectPage(12),
                   child:
                   Center(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
                       child: Text(
-                        "Tickets Scannen",
+                        "Make Ticket",
                         style: TextStyle(
                             fontSize: Theme.of(context)
                                 .textTheme
@@ -155,7 +155,6 @@ class HistoryOfTicketsMade extends ConsumerWidget {
                       ),
                     ),
                   ),
-
                   style: darkButton
               ),
             ),
