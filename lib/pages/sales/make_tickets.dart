@@ -185,7 +185,7 @@ class MakeTickets extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(0,30,0,30),
             child: ElevatedButton(
               onPressed: () =>
-                  ref.read(navigationNotifierProvider).selectPage(14),
+                  ref.read(navigationNotifierProvider).selectPage(15),
               child: Center(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),

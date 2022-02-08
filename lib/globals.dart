@@ -11,8 +11,9 @@ const inputFieldBackgroundColorBorder = Color.fromARGB(255, 231, 229, 244);
 const red = Color.fromARGB(255, 237,59, 59);
 const redTransparent = Color.fromARGB(25, 255, 255, 255);
 const yellow = Color.fromARGB(255, 255, 191, 71);
-const yellowTransparant =Color.fromARGB(25, 255, 255, 255);
+const yellowTransparent =Color.fromARGB(25, 255, 255, 255);
 const borderRadiusTheme = 12.0;
+
 
 
 final darkButton = ElevatedButton.styleFrom(

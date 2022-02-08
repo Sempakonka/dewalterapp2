@@ -6,7 +6,9 @@ import 'package:de_walter_app_2/pages/choose_workspace.dart';
 import 'package:de_walter_app_2/pages/sales/choose_event_for_sales.dart';
 import 'package:de_walter_app_2/pages/sales/history_of_tickets_made.dart';
 import 'package:de_walter_app_2/pages/sales/login_as_seller.dart';
+import 'package:de_walter_app_2/pages/sales/made_ticket_overview.dart';
 import 'package:de_walter_app_2/pages/sales/make_tickets.dart';
+import 'package:de_walter_app_2/pages/sales/pre_payment.dart';
 import 'package:de_walter_app_2/pages/sales/qr_await_payment.dart';
 import 'package:de_walter_app_2/pages/scanner/already_scanned_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
@@ -122,6 +124,12 @@ class NavigationNotifier extends ChangeNotifier {
         break;
       case 14:
         BodySingleton().body = const QrAwaitPayment();
+        break;
+      case 15:
+        BodySingleton().body = const PrePayment();
+        break;
+      case 16:
+        BodySingleton().body = const MadeTicketOverview();
         break;
     }
 

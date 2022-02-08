@@ -3,6 +3,9 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:loading_animations/loading_animations.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../globals.dart';
@@ -15,49 +18,57 @@ class QrAwaitPayment extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ConstrainedBox(
       constraints: BoxConstraints(
-          minHeight: getCorrectHeightFromPercentage(90, context)),
+          maxHeight: getCorrectHeightFromPercentage(90, context)),
       child: Column(
-        mainAxisSize: MainAxisSize.max,
         children: [
           eventIdentifier(context),
-          Column(
-          mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: inputFieldBackgroundColor,
-                  borderRadius: BorderRadius.circular(borderRadiusTheme),
-                  border: Border.all(color: inputFieldBackgroundColorBorder),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
-                    child: QrImage(
-                      data: "1234567890",
-                      version: QrVersions.auto,
-                      size: 300.0,
-                      embeddedImage: const AssetImage('assets/TickventLogo.png'),
-                      embeddedImageStyle: QrEmbeddedImageStyle(
-                        size: const Size(80, 80),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: lightPurple.withOpacity(0.1),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset:
-                          const Offset(0, 3), // changes position of shadow
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: inputFieldBackgroundColor,
+                    borderRadius: BorderRadius.circular(borderRadiusTheme),
+                    border: Border.all(color: inputFieldBackgroundColorBorder),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Container(
+                      child: QrImage(
+                        foregroundColor: darkBlue,
+                        data: "12345678gvbrtgrtgtr90",
+                        version: QrVersions.auto,
+                        size: 300.0,
+                        embeddedImage: const AssetImage('assets/TickventLogo.png'),
+                        embeddedImageStyle: QrEmbeddedImageStyle(
+                          size: const Size(120, 120),
                         ),
-                      ],
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: lightPurple.withOpacity(0.1),
+                            spreadRadius: 5,
+                            blurRadius: 7,
+                            offset:
+                            const Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+          const Padding(
+            padding: EdgeInsets.fromLTRB(8,20,0,0),
+            child: SpinKitSpinningLines(
+              color: lightPurple,
+              size: 60.0,
+            )
+          )
+              ],
+            ),
           ),
         ],
       ),

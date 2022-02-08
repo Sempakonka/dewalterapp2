@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fitted_text_field_container/fitted_text_field_container.dart';
+
 
 import '../globals.dart';
 
@@ -14,11 +16,12 @@ class ChooseWorkspace extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    TextEditingController workspaceController = TextEditingController();
     return Padding(
       key: chooseWorkspaceKey,
       padding: const EdgeInsets.fromLTRB(30, 50, 30, 9),
       child: Column(
-       mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Column(
             mainAxisSize: MainAxisSize.min,
@@ -36,6 +39,7 @@ class ChooseWorkspace extends ConsumerWidget {
                 ),
               ),
               Container(
+                width: double.infinity,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(borderRadiusTheme),
                     color: inputFieldBackgroundColor,
@@ -44,55 +48,48 @@ class ChooseWorkspace extends ConsumerWidget {
                       width: 2,
                     )),
                 child: Row(
-                  children:  [
-                const Padding(
-                padding: EdgeInsets.fromLTRB(14,14,14,14),
-                child: SizedBox(
-                  width: 30,
-                  height: 30,
-                  child: Image(image: AssetImage('assets/workspaceIcon.png')
-                  ),
-                ),
-                // icon is 48px widget.
-              ),
-                    Expanded(
-                      child:  TextFormField(
-                        decoration:  InputDecoration(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(14, 14, 14, 14),
+                      child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: Image(
+                            image: AssetImage('assets/workspaceIcon.png')),
+                      ),
+                      // icon is 48px widget.
+                    ),
+                    FittedTextFieldContainer(
+                      child: TextField(
+                        controller: workspaceController,
+                        decoration: const InputDecoration(
+                          hintText: "your-workspace",
                           border: InputBorder.none,
                         ),
-                        style: TextStyle(color: lightPurple,
-                          fontSize: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              ?.fontSize,
-                          fontWeight: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              ?.fontWeight,
-                          fontFamily: Theme.of(context)
-                              .textTheme
-                              .bodyText2
-                              ?.fontFamily,
+                        style: TextStyle(
+                          color: lightPurple,
+                          fontSize:
+                              Theme.of(context).textTheme.bodyText2?.fontSize,
+                          fontWeight:
+                              Theme.of(context).textTheme.bodyText2?.fontWeight,
+                          fontFamily:
+                              Theme.of(context).textTheme.bodyText2?.fontFamily,
                         ),
                       ),
-
-
-
                     ),
-                    Expanded(child: Text(".tickvent.com", style: TextStyle(color: lightPurple,
-                      fontSize: Theme.of(context)
-                          .textTheme
-                          .bodyText2
-                          ?.fontSize,
-                      fontWeight: Theme.of(context)
-                          .textTheme
-                          .bodyText2
-                          ?.fontWeight,
-                      fontFamily: Theme.of(context)
-                          .textTheme
-                          .bodyText2
-                          ?.fontFamily,
-                    ),))
+                    Text(
+                      ".tickvent.com",
+                      style: TextStyle(
+                        color: lightPurple,
+                        fontSize:
+                            Theme.of(context).textTheme.bodyText2?.fontSize,
+                        fontWeight:
+                            Theme.of(context).textTheme.bodyText2?.fontWeight,
+                        fontFamily:
+                            Theme.of(context).textTheme.bodyText2?.fontFamily,
+                      ),
+                    )
                   ],
                 ),
               )
@@ -114,10 +111,8 @@ class ChooseWorkspace extends ConsumerWidget {
                       child: Text(
                         "Continue",
                         style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                ?.fontSize,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText2?.fontSize,
                             fontWeight: Theme.of(context)
                                 .textTheme
                                 .bodyText2
@@ -146,10 +141,8 @@ class ChooseWorkspace extends ConsumerWidget {
                       child: Text(
                         "Valid",
                         style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                ?.fontSize,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText2?.fontSize,
                             fontWeight: Theme.of(context)
                                 .textTheme
                                 .bodyText2
@@ -178,10 +171,8 @@ class ChooseWorkspace extends ConsumerWidget {
                       child: Text(
                         "Red",
                         style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                ?.fontSize,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText2?.fontSize,
                             fontWeight: Theme.of(context)
                                 .textTheme
                                 .bodyText2
@@ -210,10 +201,8 @@ class ChooseWorkspace extends ConsumerWidget {
                       child: Text(
                         "Yellow",
                         style: TextStyle(
-                            fontSize: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                ?.fontSize,
+                            fontSize:
+                                Theme.of(context).textTheme.bodyText2?.fontSize,
                             fontWeight: Theme.of(context)
                                 .textTheme
                                 .bodyText2

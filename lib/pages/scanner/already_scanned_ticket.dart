@@ -116,7 +116,7 @@ class AlreadyScanned extends ConsumerWidget {
                     ],
                   ),
                   decoration: BoxDecoration(
-                    color: yellowTransparant,
+                    color: yellowTransparent,
                     borderRadius: BorderRadius.circular(borderRadiusTheme),
                     border: Border.all(color: inputFieldBackgroundColorBorder),
                   ),
