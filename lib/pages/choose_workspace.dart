@@ -36,19 +36,63 @@ class ChooseWorkspace extends ConsumerWidget {
                 ),
               ),
               Container(
-                decoration: const BoxDecoration(
-                  // color: const Color(0xFFF1F0FA),
-                  // border: Border.all(color: const Color(0xFF6C5CE7), width: 1)
-                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(borderRadiusTheme),
+                    color: inputFieldBackgroundColor,
+                    border: Border.all(
+                      color: lightPurple,
+                      width: 2,
+                    )),
                 child: Row(
-                  children: const [
-                    Expanded(child: Icon(Icons.business_center)),
+                  children:  [
+                const Padding(
+                padding: EdgeInsets.fromLTRB(14,14,14,14),
+                child: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Image(image: AssetImage('assets/workspaceIcon.png')
+                  ),
+                ),
+                // icon is 48px widget.
+              ),
                     Expanded(
-                      child: TextField(
-                        // ...
+                      child:  TextFormField(
+                        decoration:  InputDecoration(
+                          border: InputBorder.none,
+                        ),
+                        style: TextStyle(color: lightPurple,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              ?.fontSize,
+                          fontWeight: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              ?.fontWeight,
+                          fontFamily: Theme.of(context)
+                              .textTheme
+                              .bodyText2
+                              ?.fontFamily,
+                        ),
                       ),
+
+
+
                     ),
-                    Expanded(child: Text(".tickvent.com"))
+                    Expanded(child: Text(".tickvent.com", style: TextStyle(color: lightPurple,
+                      fontSize: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          ?.fontSize,
+                      fontWeight: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          ?.fontWeight,
+                      fontFamily: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          ?.fontFamily,
+                    ),))
                   ],
                 ),
               )
@@ -58,47 +102,6 @@ class ChooseWorkspace extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 42, 0, 2),
-                child: TextFormField(
-                  controller: null,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(
-                        vertical: 14, horizontal: 15),
-                    prefixIcon: const Padding(
-                      padding: EdgeInsets.all(0.0),
-                      child: Icon(
-                        Icons.work_outline_rounded,
-                        color: lightPurple,
-                      ), // icon is 48px widget.
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: lightPurple, width: 2),
-                      borderRadius: BorderRadius.circular(borderRadiusTheme),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: lightPurple, width: 2),
-                      borderRadius: BorderRadius.circular(borderRadiusTheme),
-                    ),
-                    floatingLabelBehavior: FloatingLabelBehavior.never,
-                    filled: true,
-                    labelStyle: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize:
-                            Theme.of(context).textTheme.bodyText2!.fontSize,
-                        color: lightPurple),
-                    labelText: "Workspace-url",
-                    fillColor: inputFieldBackgroundColor,
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Field is empty";
-                    }
-                  },
-                ),
-              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
                 child: ElevatedButton(

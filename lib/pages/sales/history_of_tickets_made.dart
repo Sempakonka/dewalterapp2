@@ -92,9 +92,24 @@ class HistoryOfTicketsMade extends ConsumerWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.category),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(8.0,8,0,8),
+                              child: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: lightPurple,
+                              borderRadius: BorderRadius.circular(borderRadiusTheme),
+                                ),
+                                child: const Padding(
+                                  padding: EdgeInsets.fromLTRB(14,14,14,14),
+                                  child: Image(image: AssetImage('assets/ticketIcon.png')
+                             ),
+                                ),
+                              ),
+                            ),
                             SizedBox(
-                              height: 80,
+                              height: 70,
                               width: 200,
                               child: ListTile(
                                 onTap: () => ref
