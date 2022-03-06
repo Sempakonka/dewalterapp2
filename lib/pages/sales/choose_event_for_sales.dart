@@ -8,8 +8,8 @@ import 'package:intl/intl.dart';
 
 import '../../utils.dart';
 
-class ChooseEvent extends ConsumerWidget {
-  const ChooseEvent({Key? key}) : super(key: key);
+class ChooseEventForSales extends ConsumerWidget {
+  const ChooseEventForSales({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -101,7 +101,7 @@ class ChooseEvent extends ConsumerWidget {
                                     onTap: () {
                                       ref
                                           .read(navigationNotifierProvider)
-                                          .selectPage(3, args: {
+                                          .selectPage(13, args: {
                                         'name': events[index].name,
                                         'date': events[index]
                                                 .startDate

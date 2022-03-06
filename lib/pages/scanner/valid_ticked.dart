@@ -1,11 +1,8 @@
-import 'package:de_walter_app_2/pages/scanner/already_scanned_ticket.dart';
-import 'package:de_walter_app_2/providers/auth_providers.dart';
-import 'package:de_walter_app_2/services/database_service.dart';
-import 'package:de_walter_app_2/services/qr_scanner_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../globals.dart';
+import '../../utils.dart';
 
 class ValidTicket extends ConsumerWidget {
   static const routeName = '/validTicket';
@@ -14,200 +11,262 @@ class ValidTicket extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ticketResultArgs =
-        ModalRoute.of(context)!.settings.arguments as TicketResultArgs;
-    final scannedTicket = ticketResultArgs.ticket;
-    final controller = ticketResultArgs.controller;
-
-
-    return MaterialApp(
-      home: Scaffold(
-        backgroundColor: green,
-        body: Center(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+          maxHeight: getCorrectHeightFromPercentage(80, context)),
+      child: Container(
+        decoration: const BoxDecoration(color: green,
+            borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(35),
+        topRight: Radius.circular(35),
+      ),),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(25, 40, 30, 25),
+          child: Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Icon(
-                  Icons.check_rounded,
-                  size: 170,
-                  color: Colors.white,
-                ),
-                const Text(
-                  "Geldige QR code",
-                  style: TextStyle(color: Colors.white, fontSize: 25),
-                  textAlign: TextAlign.start,
-                ),
                 const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        "Naam",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.start,
-                      )),
+                  padding: EdgeInsets.fromLTRB(0,0,0,20),
+                  child: Text(
+                    "Valid QR Code",
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    textAlign: TextAlign.start,
+                  ),
                 ),
                 Container(
-                  height: 50,
-                  width: double.infinity,
-                  child: Center(
-                      child: Text(
-                    scannedTicket!.name,
-                    style: TextStyle(color: green),
-                  )),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Colors.white),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 18, 0, 5),
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        "E-mail",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.start,
-                      )),
-                ),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  child: Center(
-                      child: Text(
-                    scannedTicket.email,
-                    style: TextStyle(color: green),
-                  )),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Colors.white),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 18, 0, 5),
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        "Ticket prijs",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.start,
-                      )),
-                ),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  child: Center(
-                      child: Text(
-                    scannedTicket.email,
-                    style: const TextStyle(color: green),
-                  )),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Colors.white),
-                ),
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 18, 0, 5),
-                  child: SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        "Nog te betalen",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.start,
-                      )),
-                ),
-                Container(
-                  height: 50,
-                  width: double.infinity,
-                  child: Center(
-                      child: Text(
-                    (scannedTicket.ticketPrice! - scannedTicket.prePayment!)
-                        .toString(),
-                    style: const TextStyle(color: green),
-                  )),
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      color: Colors.white),
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(50, 50, 50, 5),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      bool isScanned =
-                          await checkIfAlreadyScanned(scannedTicket.tickedCode);
-                      if (!isScanned) {
-                        checkInTicket(scannedTicket.tickedCode, DateTime.now(),
-                            ref.watch(sessionNotifierProvider).user!.id);
-                        controller.resumeCamera();
-                        Navigator.pop(context);
-                      } else {
-                        Navigator.pop(context);
-                        Navigator.pushNamed(context, AlreadyScanned.routeName,
-                            arguments: TicketResultArgs(
-                                ticket: scannedTicket, controller: controller));
-                      }
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Accepteer",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .fontSize),
-                        ),
-                        const Icon(Icons.arrow_forward_outlined, color: green),
-                      ],
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        //background color of button
-                        //elevation of button
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        padding: const EdgeInsets.all(
-                            10) //content padding inside button
-                        ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(14, 16, 0, 8),
+                            child: Text(
+                              "Event",
+                              style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontSize,
+                                  fontFamily: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontFamily,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(14, 16, 0, 8),
+                            child: Text(
+                              "Name",
+                              style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontSize,
+                                  fontFamily: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontFamily,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(14, 8, 0, 8),
+                            child: Text(
+                              "Email Address",
+                              style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontSize,
+                                  fontFamily: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontFamily,
+                                  color: Colors.white),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(14, 8, 0, 8),
+                            child: Text(
+                              "Phone Number",
+                              style: TextStyle(
+                                  fontSize: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontSize,
+                                  fontFamily: Theme.of(context)
+                                      .textTheme
+                                      .bodyText2
+                                      ?.fontFamily,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 16, 14, 8),
+                            child: Text("Sem Pakonka",
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontSize,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontFamily,
+                                    color: Colors.white)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 8, 14, 8),
+                            child: Text("Sempakonka@gmail.com",
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontSize,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontFamily,
+                                    color: Colors.white)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 8, 14, 8),
+                            child: Text("06 403 260 27",
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontSize,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontFamily,
+                                    color: Colors.white)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 8, 14, 16),
+                            child: Text("24 - 11 - 2000",
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontSize,
+                                    fontWeight: FontWeight.w800,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontFamily,
+                                    color: Colors.white)),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                    color: greenTransparent,
+                    borderRadius: BorderRadius.circular(borderRadiusTheme),
+                    border: Border.all(color: inputFieldBackgroundColorBorder),
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(50, 10, 50, 35),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      controller.resumeCamera();
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(Icons.arrow_back_outlined,
-                            color: Colors.red),
-                        Text(
-                          "Annuleer",
-                          style: TextStyle(
-                              color: Colors.green,
-                              fontSize: Theme.of(context)
-                                  .textTheme
-                                  .bodyText2!
-                                  .fontSize),
+                  padding: const EdgeInsets.fromLTRB(0,25,0,25),
+                  child: Text("To Be Paid", style: TextStyle(
+                      fontSize: Theme.of(context)
+                          .textTheme
+                          .headline1
+                          ?.fontSize,
+                      fontWeight: Theme.of(context)
+                          .textTheme
+                          .headline1
+                          ?.fontWeight,
+                      fontFamily: Theme.of(context)
+                          .textTheme
+                          .headline1
+                          ?.fontFamily,
+                      color: Colors.white),),
+                ),
+                Container(
+                    child: Padding(
+                      padding: const EdgeInsets.all(30.0),
+                      child: Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(" 49,99",
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .headline1
+                                        ?.fontSize,
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .headline1
+                                        ?.fontWeight,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .headline1
+                                        ?.fontFamily,
+                                    color: Colors.white))
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        //background color of button
-                        //elevation of button
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
+                    decoration: BoxDecoration(
+                        color: greenTransparent,
+                        borderRadius:
+                            BorderRadius.circular(borderRadiusTheme),
+                        border: Border.all(
+                            color: inputFieldBackgroundColorBorder))),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(50, 50, 50, 20),
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                              child: Text(
+                                "Accept",
+                                style: TextStyle(
+                                    fontSize: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontSize,
+                                    fontWeight: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontWeight,
+                                    fontFamily: Theme.of(context)
+                                        .textTheme
+                                        .bodyText2
+                                        ?.fontFamily,
+                                    color: green),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          style: whiteButton,
                         ),
-                        padding: const EdgeInsets.all(
-                            10) //content padding inside button
-                        ),
+                      ),
+                    ],
                   ),
-                )
+                ),
               ],
             ),
           ),

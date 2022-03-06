@@ -16,140 +16,168 @@ class LoginAsScanner extends ConsumerWidget {
     final _usernameController = TextEditingController();
     final _passwordController = TextEditingController();
 
-    return Material(
-      color: Colors.transparent,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-                width: double.infinity,
-                child: Text(
-                  "Welkom scanner",
-                  style: Theme.of(context).textTheme.headline1,
-                )),
-            SizedBox(
-                width: double.infinity,
-                child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, "
-                  "sed do eiusmod tempor incididunt ut labore et dolore "
-                  "magna aliqua. Ut enim ad minim veniam, quis nostrud "
-                  "exercitation ullamco laboris nisi ut",
-                  style: TextStyle(
-                      fontSize: Theme.of(context).textTheme.bodyText2!.fontSize,
-                      color: Colors.black87),
-                )),
-            Form(
-              key: _passwordFormKey,
-              child: Column(
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(30, 50, 30, 9),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+              width: double.infinity,
+              child: Text(
+                "Get Started",
+                style: Theme.of(context).textTheme.headline1,
+              )),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 12, 0, 0),
+            child: SizedBox(
+              width: double.infinity,
+              child: Text(
+                "Login To Continue!",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 28, 0, 0),
+            child: Container(
+              height: 60,
+              child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 40, 0, 8),
-                    child: TextFormField(
-                      controller: _usernameController,
-                      decoration: InputDecoration(
-                        //     errorText: "Wrong password",
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        filled: true,
-                        labelStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText2!.fontSize,
-                            color: Colors.black38),
-                        labelText: "Gebruikersnaam",
-                        fillColor: Colors.black12,
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Field is empty";
-                        }
-                      },
-                    ),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                    child: Icon(Icons.email),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                    child: TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                        floatingLabelBehavior: FloatingLabelBehavior.never,
-                        filled: true,
-                        labelStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText2!.fontSize,
-                            color: Colors.black38),
-                        labelText: "Wachtwoord",
-                        fillColor: Colors.black12,
-                      ),
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Field is empty";
-                        }
-                      },
-                    ),
+                  Text("Square", style: Theme.of(context).textTheme.headline2)
+                ],
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(borderRadiusTheme),
+                boxShadow: [
+                  BoxShadow(
+                    color: lightPurple.withOpacity(0.1),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3), // changes position of shadow
                   ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width * 0.5,
-                child: ElevatedButton(
-                  onPressed: () async {/*
-                    if (_passwordFormKey.currentState!.validate()) {
-                      await _auth
-                          .tryToLoginAsScanner(_usernameController.text,
-                              _passwordController.text, ref)
-                          .then((value) =>
-                              ref.read(navigationNotifierProvider).selectPage(2))
-                          .onError((error, stackTrace) {
-                            print(error);
-                        showModal<void>(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return _ExampleAlertDialog();
-                          },
-                        );
-                      });
-                    }*/
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Inloggen",
-                        style: TextStyle(
-                            fontSize:
-                                Theme.of(context).textTheme.bodyText2!.fontSize),
+          ),
+          Form(
+            key: _passwordFormKey,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 28, 0, 2),
+                  child: TextFormField(
+                    controller: null,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 14, horizontal: 15),
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.all(0.0),
+                        child: Icon(
+                          Icons.mail_rounded,
+                          color: lightPurple,
+                        ), // icon is 48px widget.
                       ),
-                      const Icon(Icons.arrow_forward_rounded)
-                    ],
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                        const BorderSide(color: lightPurple, width: 2),
+                        borderRadius: BorderRadius.circular(borderRadiusTheme),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: inputFieldBackgroundColor, width: 0),
+                        borderRadius: BorderRadius.circular(borderRadiusTheme),
+                      ),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      filled: true,
+                      labelStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize:
+                          Theme.of(context).textTheme.bodyText2!.fontSize,
+                          color: lightPurple),
+                      labelText: "Wachtwoord",
+                      fillColor: inputFieldBackgroundColor,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Field is empty";
+                      }
+                    },
                   ),
-                  style: ElevatedButton.styleFrom(
-                      primary: green,
-                      //background color of button
-                      //elevation of button
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      padding:
-                          const EdgeInsets.all(10) //content padding inside button
-                      ),
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 20, 0, 2),
+                  child: TextFormField(
+                    controller: null,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 14, horizontal: 15),
+                      prefixIcon: const Padding(
+                        padding: EdgeInsets.all(0.0),
+                        child: Icon(
+                          Icons.lock,
+                          color: lightPurple,
+                        ), // icon is 48px widget.
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                        const BorderSide(color: lightPurple, width: 2),
+                        borderRadius: BorderRadius.circular(borderRadiusTheme),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: inputFieldBackgroundColor, width: 0),
+                        borderRadius: BorderRadius.circular(borderRadiusTheme),
+                      ),
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      filled: true,
+                      labelStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize:
+                          Theme.of(context).textTheme.bodyText2!.fontSize,
+                          color: lightPurple),
+                      labelText: "Password",
+                      fillColor: inputFieldBackgroundColor,
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Field is empty";
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+            child: ElevatedButton(
+                onPressed: () =>
+                    ref.read(navigationNotifierProvider).selectPage(2),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 7, 0, 7),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                          fontSize:
+                          Theme.of(context).textTheme.bodyText2?.fontSize,
+                          fontWeight:
+                          Theme.of(context).textTheme.bodyText2?.fontWeight,
+                          fontFamily:
+                          Theme.of(context).textTheme.bodyText2?.fontFamily,
+                          color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                style: darkButton),
+          )
+        ],
       ),
     );
   }

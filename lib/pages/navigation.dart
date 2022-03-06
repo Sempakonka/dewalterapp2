@@ -3,17 +3,26 @@ import 'dart:collection';
 import 'package:animations/animations.dart';
 import 'package:de_walter_app_2/globals.dart';
 import 'package:de_walter_app_2/pages/choose_workspace.dart';
+import 'package:de_walter_app_2/pages/sales/choose_event_for_sales.dart';
 import 'package:de_walter_app_2/pages/sales/history_of_tickets_made.dart';
 import 'package:de_walter_app_2/pages/sales/login_as_seller.dart';
+import 'package:de_walter_app_2/pages/sales/made_ticket_overview.dart';
+import 'package:de_walter_app_2/pages/sales/make_tickets.dart';
+import 'package:de_walter_app_2/pages/sales/pre_payment.dart';
+import 'package:de_walter_app_2/pages/sales/qr_await_payment.dart';
+import 'package:de_walter_app_2/pages/scanner/already_scanned_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
+import 'package:de_walter_app_2/pages/scanner/incorrect_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/scanner/people_scanned_of_event_page.dart';
 import 'package:de_walter_app_2/pages/scanner/scan_ticket_page.dart';
 import 'package:de_walter_app_2/pages/choose_activity.dart';
+import 'package:de_walter_app_2/pages/scanner/valid_ticked.dart';
 import 'package:de_walter_app_2/pages/ticket_viewer.dart';
 import 'package:de_walter_app_2/providers/auth_providers.dart';
 import 'package:de_walter_app_2/providers/database_providers.dart';
 import 'package:de_walter_app_2/providers/uiproviders.dart';
+import 'package:de_walter_app_2/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -31,8 +40,8 @@ class BodySingleton {
 
   factory BodySingleton() => _instance;
 
-  /// The body initializes with the [SignInPage]
-  Widget body = const ChooseWorkspace();
+  /// The body initializes with the [ChooseActivity]
+  Widget? body  = ChooseWorkspace();
 
   BodySingleton._internal();
 }
@@ -50,7 +59,7 @@ class NavigationNotifier extends ChangeNotifier {
 
   NavigationNotifier(this.read);
 
-  ListQueue<int> _navigationHistory = ListQueue.from([0]);
+  ListQueue<int> _navigationHistory = ListQueue.from([8]);
 
   ListQueue<int> get navigationHistory => _navigationHistory;
 
@@ -67,8 +76,7 @@ class NavigationNotifier extends ChangeNotifier {
     isPopRequest = isPopRequest ?? false;
     switch (i) {
       case 0:
-        BodySingleton().body = const SignInPage();
-        read(workspaceNotifierProvider).setHeightInPercentage(55,  context: context);
+        BodySingleton().body = const ChooseActivity();
         _currentIndex = 0;
         break;
       case 1:
@@ -80,7 +88,7 @@ class NavigationNotifier extends ChangeNotifier {
         break;
       case 3:
         read(ticketsAtScannedByProvider).fetchTickets(
-            read(sessionNotifierProvider).user!.id, args['eventId']);
+            1, args['eventId']);
 
         BodySingleton().body = PeopleScannedOfEvent(args: args);
         break;
@@ -91,10 +99,37 @@ class NavigationNotifier extends ChangeNotifier {
         BodySingleton().body = const LoginAsSeller();
         break;
       case 6:
-        BodySingleton().body = const HistoryOfTicketsMade();
+        BodySingleton().body = HistoryOfTicketsMade(args: args);
         break;
       case 7:
         BodySingleton().body = TicketViewer(args: args);
+        break;
+      case 8:
+        BodySingleton().body = ChooseWorkspace();
+        break;
+      case 9:
+        BodySingleton().body = const ValidTicket();
+        break;
+      case 10:
+        BodySingleton().body = const IncorrectTicket();
+        break;
+      case 11:
+        BodySingleton().body = const AlreadyScanned();
+        break;
+      case 12:
+        BodySingleton().body = const ChooseEventForSales();
+        break;
+      case 13:
+        BodySingleton().body = const MakeTickets();
+        break;
+      case 14:
+        BodySingleton().body = const QrAwaitPayment();
+        break;
+      case 15:
+        BodySingleton().body = const PrePayment();
+        break;
+      case 16:
+        BodySingleton().body = const MadeTicketOverview();
         break;
     }
 
@@ -119,16 +154,20 @@ class App extends ConsumerWidget {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       floatingActionButton: showBackButton
-          ? FloatingActionButton(
-              child: const Icon(Icons.arrow_back_outlined),
-              onPressed: () => ref.watch(navigationNotifierProvider).pop(
-                  context: context,
-                  args: SelectedEventSingleton().selectedEvent),
-              backgroundColor: green,
-            )
+          ? Padding(
+        padding: const EdgeInsets.fromLTRB(0,40,0,0),
+            child: FloatingActionButton(
+        elevation: 0,
+                child: const Icon(Icons.arrow_back_outlined, size: 40,),
+                onPressed: () => ref.watch(navigationNotifierProvider).pop(
+                    context: context,
+                    args: SelectedEventSingleton().selectedEvent),
+                backgroundColor: Colors.transparent,
+              ),
+          )
           : Container(),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/achtergrond.png"),
             fit: BoxFit.cover,
@@ -144,7 +183,7 @@ class App extends ConsumerWidget {
                 /// Upper half
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(40.0),
+                    padding: EdgeInsets.fromLTRB(50.0,60,50,40),
                     child: Image(image: AssetImage('assets/logo.png')),
                   ),
                 ),
@@ -191,14 +230,12 @@ class WorkPlace extends HookConsumerWidget {
       /// If navigation action is coming from the root
       onEnd: _pageToGoOnEnd != null
           ? () {
-        print(_pageToGoOnEnd);
               ref
                   .read(navigationNotifierProvider)
                   .selectPage(_pageToGoOnEnd, args: context);
               ref.read(workspaceNotifierProvider).setPageToGoOnEnd(null);
             }
           : null,
-      height: _height,
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -225,7 +262,8 @@ class WorkPlace extends HookConsumerWidget {
             transitionType: _transitionType,
           );
         },
-        child: BodySingleton().body,
+
+            child: BodySingleton().body,
       ),
     );
   }
