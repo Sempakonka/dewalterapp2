@@ -3,17 +3,11 @@ import 'dart:collection';
 import 'package:animations/animations.dart';
 import 'package:de_walter_app_2/globals.dart';
 import 'package:de_walter_app_2/pages/sales/choose_event_for_sales.dart';
-import 'package:de_walter_app_2/pages/sales/history_of_tickets_made.dart';
 import 'package:de_walter_app_2/pages/sales/login_as_seller.dart';
-import 'package:de_walter_app_2/pages/sales/made_ticket_overview.dart';
-import 'package:de_walter_app_2/pages/sales/make_tickets.dart';
-import 'package:de_walter_app_2/pages/sales/pre_payment.dart';
 import 'package:de_walter_app_2/pages/sales/qr_await_payment.dart';
 import 'package:de_walter_app_2/pages/scanner/already_scanned_ticket.dart';
-import 'package:de_walter_app_2/pages/scanner/choose_event.dart';
 import 'package:de_walter_app_2/pages/scanner/incorrect_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
-import 'package:de_walter_app_2/pages/scanner/people_scanned_of_event_page.dart';
 import 'package:de_walter_app_2/pages/scanner/scan_ticket_page.dart';
 import 'package:de_walter_app_2/pages/scanner/valid_ticked.dart';
 import 'package:de_walter_app_2/providers/auth_providers.dart';
@@ -76,23 +70,12 @@ class NavigationNotifier extends ChangeNotifier {
         BodySingleton().body = const LoginAsScanner();
         _currentIndex = 1;
         break;
-      case 2:
-        BodySingleton().body = const ChooseEvent();
-        break;
-      case 3:
-        read(ticketsAtScannedByProvider).fetchTickets(
-            1, args['eventId']);
-
-        BodySingleton().body = PeopleScannedOfEvent(args: args);
-        break;
       case 4:
         BodySingleton().body = ScanTicketPage(args: args);
         break;
       case 5:
         BodySingleton().body = const LoginAsSeller();
         break;
-      case 6:
-        BodySingleton().body = HistoryOfTicketsMade(args: args);
         break;
       case 9:
         BodySingleton().body = const ValidTicket();
@@ -106,17 +89,8 @@ class NavigationNotifier extends ChangeNotifier {
       case 12:
         BodySingleton().body = const ChooseEventForSales();
         break;
-      case 13:
-        BodySingleton().body = const MakeTickets();
-        break;
       case 14:
         BodySingleton().body = const QrAwaitPayment();
-        break;
-      case 15:
-        BodySingleton().body = const PrePayment();
-        break;
-      case 16:
-        BodySingleton().body = const MadeTicketOverview();
         break;
     }
 
