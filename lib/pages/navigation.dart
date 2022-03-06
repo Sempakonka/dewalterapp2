@@ -2,7 +2,6 @@ import 'dart:collection';
 
 import 'package:animations/animations.dart';
 import 'package:de_walter_app_2/globals.dart';
-import 'package:de_walter_app_2/pages/choose_workspace.dart';
 import 'package:de_walter_app_2/pages/sales/choose_event_for_sales.dart';
 import 'package:de_walter_app_2/pages/sales/history_of_tickets_made.dart';
 import 'package:de_walter_app_2/pages/sales/login_as_seller.dart';
@@ -16,9 +15,7 @@ import 'package:de_walter_app_2/pages/scanner/incorrect_ticket.dart';
 import 'package:de_walter_app_2/pages/scanner/login_as_scanner.dart';
 import 'package:de_walter_app_2/pages/scanner/people_scanned_of_event_page.dart';
 import 'package:de_walter_app_2/pages/scanner/scan_ticket_page.dart';
-import 'package:de_walter_app_2/pages/choose_activity.dart';
 import 'package:de_walter_app_2/pages/scanner/valid_ticked.dart';
-import 'package:de_walter_app_2/pages/ticket_viewer.dart';
 import 'package:de_walter_app_2/providers/auth_providers.dart';
 import 'package:de_walter_app_2/providers/database_providers.dart';
 import 'package:de_walter_app_2/providers/uiproviders.dart';
@@ -41,7 +38,7 @@ class BodySingleton {
   factory BodySingleton() => _instance;
 
   /// The body initializes with the [ChooseActivity]
-  Widget? body  = ChooseWorkspace();
+  Widget? body  = LoginAsScanner();
 
   BodySingleton._internal();
 }
@@ -75,10 +72,6 @@ class NavigationNotifier extends ChangeNotifier {
     _reverse = reverse ?? false;
     isPopRequest = isPopRequest ?? false;
     switch (i) {
-      case 0:
-        BodySingleton().body = const ChooseActivity();
-        _currentIndex = 0;
-        break;
       case 1:
         BodySingleton().body = const LoginAsScanner();
         _currentIndex = 1;
@@ -100,12 +93,6 @@ class NavigationNotifier extends ChangeNotifier {
         break;
       case 6:
         BodySingleton().body = HistoryOfTicketsMade(args: args);
-        break;
-      case 7:
-        BodySingleton().body = TicketViewer(args: args);
-        break;
-      case 8:
-        BodySingleton().body = ChooseWorkspace();
         break;
       case 9:
         BodySingleton().body = const ValidTicket();
